@@ -1,0 +1,284 @@
+# RIVALY
+
+> **Find allies. Meet rivals.** Plataforma de identidade gamer (Rival + Ally) construída em torno do **Passaporte Gamer**.
+
+Produção: <https://rivaly-social.vercel.app>
+
+A RIVALY reúne num só registro quem a pessoa é como jogadora: plataformas, jogos, horários, funções no time, um perfil comportamental (o **DNA Gamer**), nível, reputação e conquistas. Todo o resto do produto lê ou escreve nesse registro:
+
+```text
+Biblioteca → preferências → DNA Gamer → compatibilidade → Squads → Arena e Clãs → Feed → XP e conquistas → Passaporte
+```
+
+Projeto individual do desafio Happy Game (FIAP, Fases 1 a 3). Autor: Guilherme Oliveira Santos, RM576218, 2026.
+
+---
+
+## O que há de novo na V3.1 (Enterprise Challenge: cibersegurança e IA)
+
+Proposta de cibersegurança e IA feita com a Palo Alto Networks, e o **padrão de senha** implementado de verdade, no navegador e num servidor de demonstração.
+
+| Área | O que mudou |
+|---|---|
+| **Padrão de senha** | `js/core/password-policy.js`, o mesmo arquivo no cliente e no servidor: 15 a 128 caracteres, frases valem, sem regra de composição (NIST SP 800-63B-4), lista de bloqueio com variações (`p@ssw0rd`, `minecraft2024!`), sem apelido nem e-mail, e estimativa de força. |
+| **Senhas vazadas** | Consulta ao Have I Been Pwned com k-anonimato: só 5 caracteres do SHA-1 saem do aparelho (`js/core/pwned.js`). |
+| **Hash** | Navegador: PBKDF2-SHA256 com 600 mil iterações e sal por conta, migrando o SHA-256 com sal fixo no primeiro login. Servidor: argon2id (19 MiB, t=2), nativo do Node. |
+| **Login** | Bloqueio progressivo no 5º erro seguido (30 s, dobrando até 15 min), por e-mail e IP; mensagem genérica e mesmo tempo de resposta para e-mail inexistente. |
+| **Servidor da demo** | `server/` (Node, sem dependências): cadastro, login, HTTP 429 com `Retry-After`, cookie `HttpOnly; SameSite=Strict`. `api/password-check.js` publica a checagem como Vercel Function. |
+| **Laboratório** | Página nova `seguranca.html`: medidor de força, hash antigo × novo, simulador de bloqueio e cadastro e login no servidor. |
+| **Endurecimento** | HSTS; `npm audit` zerado (2 vulnerabilidades altas no Vite corrigidas); exportação de dados sem o estado de segurança; 404 do `npm run dev` corrigido. |
+| **Testes** | 83 testes (eram 39): padrão de senha, bloqueio, HIBP, hash, login local e servidor HTTP. |
+| **Entrega** | `entrega/`: 10 slides, roteiro do vídeo e `npm run entrega` (PDF + ZIP). Proposta completa em [`docs/seguranca-e-ia.md`](docs/seguranca-e-ia.md) e padrão em [`docs/padrao-de-senha.md`](docs/padrao-de-senha.md). |
+
+---
+
+## O que há de novo na V3
+
+| Área | O que mudou |
+|---|---|
+| **Início** | O nível do Passaporte vira o elemento dominante da página (HUD): número em fonte pixel, barra de XP segmentada em 20 blocos e um ledger com experiência, Pontuação Gamer, reputação, jogos e medalhas. Substitui a saudação genérica e os seis cards desalinhados. |
+| **Agenda da semana** | Em Squads, a sua agenda é uma **matriz 7 dias × 5 períodos**. A RIVALY soma a sua matriz com a de quem está no squad (marcados, última sessão ou squad salvo), mostra o mapa de calor e o melhor horário. |
+| **Bônus de equilíbrio** | Na Arena, `B(p) = 40 · 4p(1 − p)`: uma parábola com vértice em 50% de chance. Partidas equilibradas rendem até 40 XP a mais; atropelar quem é muito mais fraco não rende extra. Aparece no modal antes de confirmar. |
+| **`js/domain/formulas.js`** | Toda a matemática num módulo puro e testado: funções de 1º grau (passo de XP, ΔR do Elo, pontos de temporada, soma ponderada), de 2º grau (XP acumulado, nível do clã, bônus de equilíbrio), Bhaskara e vértice. |
+| **Estrutura de pastas** | `js/` dividido em `pages/`, `core/`, `domain/` e `ui/`. Regras de negócio sem DOM ficam em `domain/` e rodam nos testes do Node. |
+| **Correções** | Filtro de Squads só fica fixo quando cabe na tela (o botão "Encontrar jogadores" ficava inalcançável em telas baixas); coluna do filtro mais larga entre 1200 e 1399 px; rótulos do DNA Gamer não quebram mais no meio da palavra no celular. |
+| **Testes** | 39 testes de unidade (eram 24): fórmulas, matriz de agenda, Elo, temporada, RNG e validação. |
+
+Onde cada conteúdo da Fase 3 (estruturas de controle, laços, matrizes, funções de 1º e 2º grau) aparece no código: [`docs/evidencias-fase3.md`](docs/evidencias-fase3.md).
+
+---
+
+## O que há de novo na V2
+
+| Área | O que mudou |
+|---|---|
+| **Arena** | Duelo, Squad e Clã vs Clã com rating no estilo Elo. Antes de cada partida aparece a chance de vitória e quanto o rating sobe ou cai; depois, a conta do resultado. Temporada semanal, ranking em tabela (jogadores e clãs) e histórico paginado. |
+| **Clãs** | Explorar clãs pela compatibilidade com o seu DNA, entrar, candidatar-se, criar um clã (emblema personalizável: formato do escudo, padrão e cores, com a tag no centro), gerenciar o elenco e acompanhar nível e meta semanal. |
+| **Feed** | Posts de até 280 caracteres, reações (GG, Respeito, Rivalidade), comentários e abas para clã, aliados, rivais e Arena. Junta a atividade do usuário com os posts da comunidade. |
+| **Squads** | Depois da busca, o usuário joga uma **sessão** com 2 a 4 jogadores (escolhidos ou sorteados). No pós-partida marca cada colega como Aliado, Rival ou Neutro. |
+| **Centro de convites** | Sino no topo, com contador: convites de clã, respostas de candidatura e desafios da Arena. |
+| **Bootstrap 5.3** | Infraestrutura visível (grid, navbar, offcanvas, modal, dropdown, formulários, tabela, accordion, paginação) vestida com a identidade preto e amarelo. |
+| **Arquitetura de informação** | Navegação agrupada (Você, Comunidade, Explorar, Conta) a partir de uma fonte única, página **Mapa do site** com busca, `sitemap.xml` e página 404. |
+| **Validação e UX Writing** | `validation.js` com regras reutilizáveis e erro inline; todo o site em PT-BR, com botões que dizem o resultado. |
+| **Segurança** | CSP e cabeçalhos de segurança no `vercel.json`, sem script inline, `?redirect=` restrito ao próprio site, texto do usuário sempre escapado. |
+
+---
+
+## Comunidade simulada
+
+A RIVALY **não tem servidor nem outros usuários reais**. Os outros jogadores são 33 perfis semeados (`js/domain/data.js`) e 7 clãs formados por eles. A interface diz isso em toda tela da comunidade (selo "Comunidade simulada", com explicação no tooltip).
+
+Tudo o que esses jogadores "fazem" (aceitar ou recusar uma candidatura, convidar você para um clã, desafiar você na Arena, postar no Feed, ganhar uma partida) sai de um **motor determinístico e explicável** (`js/domain/community.js`):
+
+- **Sem `Math.random()` no domínio.** Os sorteios vêm de `js/core/rng.js` (mulberry32), semeados com o id do usuário, o id da entidade e a **semana ISO**. O mesmo cenário sempre dá o mesmo resultado, e a comunidade muda de uma semana para a outra.
+- **Toda decisão devolve `{ decision, reasons[], score, threshold }`.** A tela mostra os motivos, inclusive o número sorteado, em "Por quê?" e "Ver a conta".
+- **Respostas não são instantâneas.** Candidaturas e convites enviados ganham um intervalo simulado (12 s), persistido; a resposta chega no centro de convites na próxima visita ou quando o temporizador passa por ela.
+
+Exemplo de decisão (candidatura a um clã):
+
+```text
++ Seu rank (Diamante) cumpre o mínimo (Diamante).
++ Sua reputação (88) cumpre o mínimo de 85.
++ Há 5 vagas no clã.
++ Compatibilidade média com o elenco: 92%.        +92
++ Você joga Valorant, um dos jogos foco do clã.   +10
++ Estilo de jogo próximo do clã (Hardcore).        +5
+- Avaliação do líder nesta semana: −3.             −3
++ Nota final 104; o clã aceita a partir de 65.
+```
+
+---
+
+## Fórmulas
+
+### Compatibilidade (7 fatores)
+
+Cada fator vale de 0 a 100 e é multiplicado pelo peso. A soma é a nota.
+
+| Fator | Peso | Como pontua |
+|---|---|---|
+| Jogo | 20% | joga o jogo = 100; gêneros parecidos = 62 ou 48; nada em comum = 15 |
+| Rank | 15% | pela distância na escada (mesmo degrau = 100, um degrau = 85...) |
+| Horário | 15% | pela distância entre faixas de horário |
+| Estilo de jogo | 15% | pela distância entre Casual, Equilibrado, Competitivo e Hardcore |
+| Função | 15% | função complementar = 100; mesma função = 52 |
+| Comunicação | 10% | preferência de voz, multiplicada por 0,6 sem idioma em comum |
+| Reputação | 10% | a reputação do jogador, direto |
+
+A compatibilidade de um **clã** é a média dessa nota entre o usuário e cada membro.
+
+### Arena (estilo Elo)
+
+```text
+expectativa   E  = 1 / (1 + 10^((Rb − Ra) / 400))
+novo rating   R' = R + K × (S − E)        S = 1 vitória, 0 derrota
+K = 40 nas 10 primeiras partidas, 32 depois. Rating inicial: 1000.
+```
+
+O resultado sai de um sorteio determinístico comparado com E (sorteio < E = vitória). Squad usa a média dos ratings do time; Clã vs Clã usa a média dos 3 melhores de cada lado. Tiers: Bronze, Prata (900), Ouro (1100), Platina (1300), Diamante (1500) e Lenda (1700). Temporada = semana ISO; pontos da temporada: vitória 3, derrota 1.
+
+Rating dos jogadores semeados (sempre o mesmo): `700 + 95 × degrau do rank + 5 × (reputação − 60) + 40 × log10(partidas + 1)`.
+
+### Sessão de squad
+
+```text
+poder do jogador = degrau do rank × 10 + reputação × 0,5
+força do squad   = média dos poderes + (compatibilidade média − 60) × 0,3
+adversário       = força do squad + desvio sorteado entre −12 e +12
+chance           = 1 / (1 + e^(−(nós − eles) / 6))
+```
+
+### XP
+
+| Ação | XP |
+|---|---|
+| Passaporte criado / DNA concluído / Passaporte 100% | 100 / 200 / 200 |
+| Jogo adicionado / zerado / avaliado | 50 / 75 / 15 |
+| Busca de squad / parceiro salvo / match acima de 90% | 150 / 60 / 120 |
+| **Sessão de squad** | 120 |
+| **Aliado ou Rival declarado** (uma vez por jogador) | 30 |
+| **Entrar em um clã** (uma vez por clã) / **criar clã** (uma vez) | 150 / 200 |
+| **Vitória na Arena** / **derrota na Arena** | 90 / 35 |
+| **Bônus de equilíbrio** na Arena, `40 · 4p(1 − p)` (vale ganhando ou perdendo) | 0 a 40 |
+| **Post** / **reação** no Feed (até 6 por dia, somados) | 20 / 5 |
+| Conquista desbloqueada | 40 |
+
+Nível: avançar do nível L para L+1 custa `500L + 500` XP (1º grau); o acumulado até o nível L é `250L² + 250L − 500` (2º grau), e o nível sai do XP por Bhaskara. Clã: chegar ao nível N exige `120 × (N − 1)²` XP; a meta semanal é 60 pontos por integrante. Tudo em `js/domain/formulas.js`.
+
+**Reputação** e **Pontuação Gamer** não mudaram na V2 (ver `js/domain/gamification.js`). O rating de Arena é uma métrica separada.
+
+### Conquistas
+
+28 conquistas em cinco raridades (Comum, Incomum, Rara, Épica, Lendária). As 8 novas: Primeira Sessão, Aliado Declarado, Rival Digno, Recruta, Bandeira Erguida, Primeira Vitória na Arena, Lenda da Arena e Voz da Comunidade.
+
+---
+
+## Stack
+
+```text
+HTML5 · CSS3 · JavaScript (ES Modules) · Bootstrap 5.3.8
+```
+
+- **Bootstrap 5.3.8**, baixado e servido localmente em `vendor/bootstrap/` (`bootstrap.min.css` e `bootstrap.bundle.min.js`), sem CDN. `css/bootstrap-theme.css` liga as variáveis `--bs-*` aos tokens da marca.
+- **Sem React, Tailwind, jQuery ou backend de produção.** Persistência no navegador, via `js/core/storage.js` (namespace `rivaly:`, schema 2). O servidor de `server/` é só a demonstração de autenticação (Node, sem dependências, dados em memória).
+- **Fontes locais**: Chakra Petch e Jersey 10 (`css/fonts.css`).
+- **Imagens externas** permitidas na CSP: capas da Steam CDN e do IGDB (via GameDB), avatares do DiceBear. Emblemas de clã, avatares dos jogadores semeados e fallbacks de capa são gerados no navegador.
+- **Vite** é só ferramenta de desenvolvimento e build (`devDependency`).
+
+---
+
+## Como rodar localmente
+
+Os ES Modules não carregam por `file://`, então é preciso um servidor.
+
+```bash
+npm install
+npm run dev        # http://localhost:5173 (ou: start.bat / ./start.sh)
+npm run demo       # site + servidor de autenticação (argon2id) em 127.0.0.1:8787, via /api
+npm run build      # gera dist/ com as 16 páginas
+npm run preview    # serve dist/ com os mesmos cabeçalhos de segurança do vercel.json
+npm test           # 83 testes (node:test, sem dependências)
+npm run entrega    # PDF dos slides e ZIP da entrega (ver entrega/README.md)
+```
+
+Sem Node, `python -m http.server 5500` na raiz também abre o site, mas as imagens de `public/` (marca e capas locais) só aparecem pelo Vite ou pela Vercel.
+
+Scripts de manutenção:
+
+```bash
+npm run sync:chrome    # regrava navbar, offcanvas, barra inferior e rodapé de cada página a partir do SITE_MAP
+npm run docs:sitemap   # regera docs/mapa-do-site.md a partir do SITE_MAP
+```
+
+---
+
+## Conta demo
+
+Na tela de login, **"Explorar com a conta demo"** monta em um clique um Passaporte completo: DNA, 14 jogos, squad salvo, o clã [RVLY] liderado pelo usuário, sessões avaliadas (aliados e rivais), histórico de Arena, posts no Feed e uma resposta esperando no centro de convites. Tudo passa pelas funções reais do domínio.
+
+```text
+e-mail  demo@happygame.local
+senha   demo1234
+```
+
+A conta é local: não há servidor de produção, recuperação de senha nem sincronização entre dispositivos. Contas criadas pelo formulário seguem o padrão de senha e ficam guardadas como PBKDF2 com sal próprio; o aviso aparece na tela de login. Detalhes em `docs/padrao-de-senha.md`.
+
+---
+
+## Mapa do site
+
+Fonte única: `js/core/site-map.js`. A mesma árvore alimenta a navegação, a página `sitemap.html` e o `docs/mapa-do-site.md`.
+
+```text
+RIVALY
+├── Você ........... Início · Passaporte · Biblioteca · Conquistas
+├── Comunidade ..... Squads · Arena · Clãs · Feed
+├── Explorar ....... Descobrir
+├── Conta .......... Configurações · Segurança · Mapa do site
+└── Públicas ....... Início público · Entrar ou criar conta · Onboarding
+```
+
+No celular, a barra inferior tem Início, Passaporte, Squads, Arena e **Mais** (abre o menu completo em offcanvas). A página `404.html` explica o erro e oferece o Início e o Mapa do site.
+
+---
+
+## Estrutura de pastas
+
+```text
+├── *.html                    16 páginas (inclui arena, clans, feed, seguranca, sitemap e 404)
+├── vendor/bootstrap/         Bootstrap 5.3.8 local
+├── css/
+│   ├── bootstrap-theme.css   ponte entre os tokens da RIVALY e o Bootstrap
+│   ├── variables.css         todos os tokens (cores, tipografia, espaços)
+│   ├── reset.css · global.css · animations.css · components.css · layout.css
+│   ├── community.css         componentes da comunidade (selo, emblema, cartão do jogador)
+│   └── pages/                um arquivo por página
+├── js/
+│   ├── protocol-check.js     aviso de file:// (script clássico, fora do bundle)
+│   ├── pages/                um controller por página (DOM e eventos)
+│   ├── core/                 storage (a única porta do localStorage), app, auth, rng,
+│   │                         navigation, site-map (fonte única da navegação), validation, demo
+│   ├── domain/               regras sem DOM: formulas (1º/2º grau), availability (matriz),
+│   │                         compatibility, gamification, data, community, arena/clans/feed-store…
+│   └── ui/                   modal, cards, notifications, tour, agenda-ui, arena-ui, clan-ui…
+├── public/                   marca, capturas, capas locais, sitemap.xml, robots.txt
+├── server/                   demo de autenticação: argon2id, bloqueio, rotas HTTP (Node, sem dependências)
+├── api/                      Vercel Functions (/api/health, /api/password-check)
+├── entrega/                  slides, roteiro do vídeo e o gerador do PDF e do ZIP
+├── tools/                    sync-chrome.mjs, sitemap-doc.mjs, fetch-assets.mjs, dev-demo.mjs
+├── tests/                    domínio (fórmulas, agenda, Elo, RNG, validação) e segurança (senha, hash, bloqueio, HIBP, servidor)
+├── docs/                     decisões, mapa do site, evidências, segurança e IA, padrão de senha, roteiro
+└── vercel.json               cabeçalhos de segurança (CSP, HSTS)
+```
+
+---
+
+## Documentação
+
+| Arquivo | Conteúdo |
+|---|---|
+| `docs/decisoes-v2.md` | Design rationale: decisão, problema na V1, justificativa e implementação |
+| `docs/mapa-do-site.md` | A árvore do site em texto |
+| `docs/evidencias-js.md` | Onde estão DOM, eventos, validação, funções, arrays e cada componente do Bootstrap |
+| `docs/evidencias-fase3.md` | Estruturas de controle, laços, matrizes, funções de 1º e 2º grau e o equivalente em Java |
+| `docs/voz-e-tom.md` | Quadro de voz e tom |
+| `docs/ux-writing-antes-depois.md` | Textos reais da V1 e da V2, com o motivo de cada mudança |
+| `docs/roadmap.md` | O que a V2 entregou e o que continua no futuro |
+| `docs/seguranca-e-ia.md` | Proposta de cibersegurança e IA: diagnóstico, plano em camadas, STRIDE, usos de IA e base |
+| `docs/padrao-de-senha.md` | O padrão de senha: regras, como funciona, arquivos, como rodar a demo e limites |
+| `entrega/README.md` | Como gerar o PDF dos slides e o ZIP da entrega |
+| `CHANGELOG.md` | Mudanças da v1.0 até a v3.1 |
+
+---
+
+## Fora do escopo
+
+Backend de produção com banco de dados, contas e jogadores reais, MFA e recuperação de conta, chat em tempo real, multiplayer real, sincronização entre dispositivos, notificações push, pagamentos, integrações reais com Steam, PSN ou Xbox e os usos de IA (propostos em `docs/seguranca-e-ia.md`). O que depende disso está em `docs/roadmap.md` e aparece na landing como roteiro, nunca como botão.
+
+---
+
+## Créditos
+
+RIVALY · Guilherme Oliveira Santos · RM576218 · FIAP 2026.
+
+Títulos de jogos usados como conteúdo demonstrativo; as artes pertencem aos seus detentores. Avatares por [DiceBear](https://dicebear.com). Base de jogos aberta [LizardByte GameDB](https://github.com/LizardByte/GameDB). Bootstrap sob licença MIT (`vendor/bootstrap/LICENSE`).

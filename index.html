@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-motion="full" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RIVALY — sua identidade gamer em um só lugar. Crie seu Passaporte Gamer, descubra seu DNA Gamer, acompanhe sua biblioteca e encontre o squad que realmente combina com você.">
+    <meta name="theme-color" content="#050505">
+    <title>RIVALY — Sua Identidade Gamer</title>
+
+    <link rel="icon" type="image/png" href="/assets/brand/icon-rivaly.png">
+
+    <!-- ============================================================
+         SOCIAL PREVIEW
+         A imagem 1200x630 e o formato que Facebook, WhatsApp, LinkedIn,
+         Discord e X usam no card. A quadrada serve ao atalho de tela
+         inicial no iOS.
+         ============================================================ -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="RIVALY">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:title" content="RIVALY — Sua Identidade Gamer">
+    <meta property="og:description" content="RIVALY — sua identidade gamer em um só lugar. Crie seu Passaporte Gamer, descubra seu DNA Gamer, acompanhe sua biblioteca e encontre o squad que realmente combina com você.">
+    <meta property="og:image" content="/assets/brand/social.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="Marca RIVALY">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RIVALY — Sua Identidade Gamer">
+    <meta name="twitter:description" content="RIVALY — sua identidade gamer em um só lugar. Crie seu Passaporte Gamer, descubra seu DNA Gamer, acompanhe sua biblioteca e encontre o squad que realmente combina com você.">
+    <meta name="twitter:image" content="/assets/brand/social.png">
+    <meta name="twitter:image:alt" content="Marca RIVALY">
+
+    <link rel="apple-touch-icon" href="/assets/brand/social-square.png">
+
+
+    <!-- chrome:styles:start -->
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/community.css">
+    <link rel="stylesheet" href="css/pages/avatar.css">
+    <!-- chrome:styles:end -->
+    <link rel="stylesheet" href="css/pages/landing.css">
+    <link rel="stylesheet" href="css/loading.css">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+
+    <!-- ============================================================
+         INTRO
+         The wordmark is the progress indicator; at 100% the V and the Y
+         transform into the >< mark. Plays once per session.
+         ============================================================ -->
+    <div class="loader" id="loader" hidden
+         role="progressbar"
+         aria-label="Carregando RIVALY"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+         aria-describedby="loaderPct">
+      <div class="loader__stage">
+        <svg class="mark" id="mark" viewBox="-8 -12 519 124"
+             role="img" aria-label="RIVALY" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <clipPath id="levelClip" clipPathUnits="userSpaceOnUse">
+              <rect id="levelRect" x="-20" y="-16" width="560" height="132" transform="translate(0 132)"></rect>
+            </clipPath>
+          </defs>
+          <g class="mark__outline" aria-hidden="true">
+            <path class="ltr" data-ltr="R" d="M0,0 L52,0 L70,18 L70,42 L56,54 L70,100 L51,100 L39,57 L19,57 L19,100 L0,100 Z M19,17 L53,17 L53,41 L19,41 Z"/>
+            <path class="ltr" data-ltr="I" d="M100,0 L119,0 L119,100 L100,100 Z"/>
+            <path class="ltr" data-ltr="V1" d="M149,0 L170,0 L187,100 L179,100 Z"/>
+            <path class="ltr" data-ltr="V2" d="M196,0 L217,0 L187,100 L179,100 Z"/>
+            <path class="ltr" data-ltr="A" d="M273,0 L291,0 L317,100 L298,100 L293,80 L271,80 L266,100 L247,100 Z M282,24 L274,63 L290,63 Z"/>
+            <path class="ltr" data-ltr="L" d="M347,0 L366,0 L366,81 L407,81 L407,100 L347,100 Z"/>
+            <path class="ltr" data-ltr="Y1" d="M437,0 L458,0 L480,60 L461,60 Z"/>
+            <path class="ltr" data-ltr="Y2" d="M482,0 L503,0 L480,60 L461,60 Z"/>
+            <path class="ltr" data-ltr="Y3" d="M461,58 L480,58 L480,100 L461,100 Z"/>
+          </g>
+          <g class="mark__fill" clip-path="url(#levelClip)" aria-hidden="true">
+            <path class="ltr" data-ltr="R" d="M0,0 L52,0 L70,18 L70,42 L56,54 L70,100 L51,100 L39,57 L19,57 L19,100 L0,100 Z M19,17 L53,17 L53,41 L19,41 Z"/>
+            <path class="ltr" data-ltr="I" d="M100,0 L119,0 L119,100 L100,100 Z"/>
+            <path class="ltr" data-ltr="V1" d="M149,0 L170,0 L187,100 L179,100 Z"/>
+            <path class="ltr" data-ltr="V2" d="M196,0 L217,0 L187,100 L179,100 Z"/>
+            <path class="ltr" data-ltr="A" d="M273,0 L291,0 L317,100 L298,100 L293,80 L271,80 L266,100 L247,100 Z M282,24 L274,63 L290,63 Z"/>
+            <path class="ltr" data-ltr="L" d="M347,0 L366,0 L366,81 L407,81 L407,100 L347,100 Z"/>
+            <path class="ltr" data-ltr="Y1" d="M437,0 L458,0 L480,60 L461,60 Z"/>
+            <path class="ltr" data-ltr="Y2" d="M482,0 L503,0 L480,60 L461,60 Z"/>
+            <path class="ltr" data-ltr="Y3" d="M461,58 L480,58 L480,100 L461,100 Z"/>
+          </g>
+          <g class="mark__morph" id="markMorph" aria-hidden="true">
+            <g class="piece" id="pieceR"><path d="M0,0 L52,0 L70,18 L70,42 L56,54 L70,100 L51,100 L39,57 L19,57 L19,100 L0,100 Z M19,17 L53,17 L53,41 L19,41 Z"/></g>
+            <g class="piece" id="pieceI"><path d="M100,0 L119,0 L119,100 L100,100 Z"/></g>
+            <g class="piece" id="pieceA"><path d="M273,0 L291,0 L317,100 L298,100 L293,80 L271,80 L266,100 L247,100 Z M282,24 L274,63 L290,63 Z"/></g>
+            <g class="piece" id="pieceL"><path d="M347,0 L366,0 L366,81 L407,81 L407,100 L347,100 Z"/></g>
+            <g class="chevron" id="chevronV">
+              <path id="vLimb1" d="M149,0 L170,0 L187,100 L179,100 Z"/>
+              <path id="vLimb2" d="M196,0 L217,0 L187,100 L179,100 Z"/>
+            </g>
+            <g class="chevron" id="chevronY">
+              <path id="yArm1" d="M437,0 L458,0 L480,60 L461,60 Z"/>
+              <path id="yArm2" d="M482,0 L503,0 L480,60 L461,60 Z"/>
+            </g>
+            <g class="piece" id="yStem"><path d="M461,58 L480,58 L480,100 L461,100 Z"/></g>
+          </g>
+          <rect class="mark__spark" id="markSpark" x="251.5" y="49" width="0" height="2"></rect>
+        </svg>
+        <p class="loader__pct" id="loaderPct"><span id="pctValue">00</span>%</p>
+        <div class="loader__brand" id="loaderBrand" aria-hidden="true">
+          <p class="loader__brand-name">RIVALY</p>
+          <p class="loader__brand-tag">RIVAL + ALLY</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ES Modules are blocked by CORS under file://. Explain it instead of failing silently. -->
+    <div class="protocol-warning" id="protocolWarning" hidden>
+        <div class="protocol-warning__inner">
+            <h2>Abra a RIVALY por um servidor local</h2>
+            <p>Este projeto usa ES Modules nativos, que o navegador recusa carregar via <code>file://</code>. Suba qualquer servidor estático na pasta do projeto e reabra a página.</p>
+            <pre>npm run dev
+# ou: python -m http.server 5500</pre>
+        </div>
+    </div>
+
+    <div class="page-root" data-app-root>
+    <nav class="navbar navbar-expand-lg site-header site-header--landing" id="siteHeader" aria-label="Navegação da página inicial">
+        <div class="container-fluid site-header__inner">
+            <a class="navbar-brand sidebar__brand" href="index.html" aria-label="Página inicial da RIVALY">
+                <span class="brand-mark" aria-hidden="true"><img class="brand-mark__img" data-brand="icon" src="/assets/brand/icon-rivaly.png" alt="" width="32" height="32" decoding="async"></span>
+                <span class="brand-name">
+                    <span class="brand-name__top">RIVALY</span>
+                    <span class="brand-name__sub">Rival + Ally</span>
+                </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#landingNav" aria-controls="landingNav" aria-expanded="false" aria-label="Abrir menu">
+                <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+            <div class="collapse navbar-collapse" id="landingNav">
+                <ul class="navbar-nav ms-lg-4 me-auto">
+                    <li class="nav-item"><a class="nav-link" href="#features">Plataforma</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#community">Comunidade</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#engine">Compatibilidade</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#numbers">Em números</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#roadmap">Roteiro</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sitemap.html" data-nav-id="sitemap">Mapa do site</a></li>
+                </ul>
+                <div class="d-flex flex-wrap gap-2 py-2 py-lg-0">
+                    <a class="btn btn-ghost btn-sm" href="login.html?mode=signin">Entrar</a>
+                    <a class="btn btn-primary btn-sm" href="login.html?mode=create">Criar meu Passaporte</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+
+        <!-- ============================================================
+             HERO
+             ============================================================ -->
+        <section class="hero">
+            <div class="hero__inner">
+                <div class="hero__copy">
+                    <h1 class="hero__title">
+                        <span class="hero__line anim-fade-right" style="animation-delay:80ms">Seu jogo.</span>
+                        <span class="hero__line anim-fade-right" style="animation-delay:200ms">Sua identidade.</span>
+                        <span class="hero__line hero__line--accent anim-fade-right" style="animation-delay:320ms">Seu squad.</span>
+                    </h1>
+
+                    <p class="hero__lede anim-fade-up" style="animation-delay:460ms">
+                        Um perfil para tudo o que você joga. Dez perguntas mapeiam como você joga
+                        de verdade, e o <strong>Passaporte Gamer</strong> que sai daí conduz o resto:
+                        sua biblioteca, seus squads, seu clã e o seu rating na Arena.
+                    </p>
+
+                    <div class="hero__actions anim-fade-up" style="animation-delay:580ms">
+                        <a class="btn btn-primary btn-lg" href="login.html?mode=create">
+                            Criar meu Passaporte Gamer
+                            <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></svg>
+                        </a>
+                        <a class="btn btn-outline-light btn-lg" href="#features">Ver o que dá para fazer</a>
+                    </div>
+
+                    <dl class="hero__facts anim-fade-up" style="animation-delay:700ms">
+                        <div class="hero__fact">
+                            <dt data-fact="attributes">6</dt>
+                            <dd>Atributos do DNA</dd>
+                        </div>
+                        <div class="hero__fact">
+                            <dt data-fact="archetypes">11</dt>
+                            <dd>Arquétipos</dd>
+                        </div>
+                        <div class="hero__fact">
+                            <dt data-fact="factors">7</dt>
+                            <dd>Fatores de compatibilidade</dd>
+                        </div>
+                        <div class="hero__fact">
+                            <dt data-fact="achievements">28</dt>
+                            <dd>Conquistas</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <!-- The animated Passaporte Gamer. Populated by js/pages/landing.js -->
+                <div class="hero__visual">
+                    <div class="hero__glow" aria-hidden="true"></div>
+                    <article class="passport-card passport-card--hero" id="heroPassport" aria-label="Exemplo de Passaporte Gamer">
+                        <div class="passport-card__sheen" aria-hidden="true"></div>
+
+                        <header class="passport-card__head">
+                            <div>
+                                <p class="passport-card__brand">RIVALY</p>
+                                <p class="passport-card__type">Passaporte Gamer</p>
+                            </div>
+                            <p class="passport-card__id numeric" data-hero="id">HG-••••-••</p>
+                        </header>
+
+                        <div class="passport-card__identity">
+                            <span class="passport-card__avatar" data-hero="avatar"></span>
+                            <div>
+                                <p class="passport-card__nick" data-hero="nick">—</p>
+                                <p class="passport-card__archetype" data-hero="archetype">Analisando…</p>
+                            </div>
+                            <div class="passport-card__level">
+                                <span class="passport-card__level-value numeric" data-hero="level">0</span>
+                                <span class="passport-card__level-label">Nível</span>
+                            </div>
+                        </div>
+
+                        <div class="passport-card__section">
+                            <p class="passport-card__section-title">Jogando agora</p>
+                            <ul class="passport-card__games" data-hero="games"></ul>
+                        </div>
+
+                        <div class="passport-card__section">
+                            <p class="passport-card__section-title">DNA Gamer</p>
+                            <div class="dna-list" data-hero="dna"></div>
+                        </div>
+
+                        <footer class="passport-card__foot">
+                            <span class="passport-card__foot-item">
+                                <span class="passport-card__foot-label">Reputação</span>
+                                <span class="numeric" data-hero="reputation">0</span>
+                            </span>
+                            <span class="passport-card__foot-item">
+                                <span class="passport-card__foot-label">Pontuação Gamer</span>
+                                <span class="numeric" data-hero="score">0</span>
+                            </span>
+                            <span class="passport-card__foot-item">
+                                <span class="passport-card__foot-label">Medalhas</span>
+                                <span class="numeric" data-hero="badges">0</span>
+                            </span>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             VITRINE — capturas reais do produto
+             As imagens sao screenshots do app rodando, nao mockups.
+             ============================================================ -->
+        <section class="showcase" id="showcase" aria-labelledby="showcaseTitle">
+            <div class="showcase__inner">
+                <div class="showcase__head">
+                    <h2 class="showcase__title" id="showcaseTitle">Veja por dentro</h2>
+                    <p class="showcase__lede">
+                        Cada tela abaixo é uma captura do produto rodando, com dados reais
+                        de um Passaporte preenchido.
+                    </p>
+                </div>
+
+                <div class="showcase__tabs" role="tablist" aria-label="Telas da RIVALY">
+                    <button type="button" class="showcase__tab is-active" role="tab" aria-selected="true" data-shot="dashboard">Início</button>
+                    <button type="button" class="showcase__tab" role="tab" aria-selected="false" data-shot="passport">Passaporte</button>
+                    <button type="button" class="showcase__tab" role="tab" aria-selected="false" data-shot="library">Biblioteca</button>
+                    <button type="button" class="showcase__tab" role="tab" aria-selected="false" data-shot="discover">Descobrir</button>
+                    <button type="button" class="showcase__tab" role="tab" aria-selected="false" data-shot="squads">Squads</button>
+                </div>
+
+                <figure class="showcase__frame">
+                    <div class="showcase__chrome" aria-hidden="true">
+                        <span class="showcase__dot"></span>
+                        <span class="showcase__dot"></span>
+                        <span class="showcase__dot"></span>
+                        <p class="showcase__label" data-shot-label>Início</p>
+                    </div>
+                    <div class="showcase__stage">
+                        <img class="showcase__img is-active" data-shot-img="dashboard" src="/assets/shots/dashboard.webp" alt="Tela de início da RIVALY, com visão geral, jogos em andamento e resumo do DNA Gamer" width="1440" height="900" decoding="async">
+                        <img class="showcase__img" data-shot-img="passport" src="/assets/shots/passport.webp" alt="Passaporte Gamer completo, com identidade, análise de DNA e assinatura da biblioteca" width="1440" height="900" loading="lazy" decoding="async">
+                        <img class="showcase__img" data-shot-img="library" src="/assets/shots/library.webp" alt="Biblioteca de jogos com capas, status, horas e notas" width="1440" height="900" loading="lazy" decoding="async">
+                        <img class="showcase__img" data-shot-img="discover" src="/assets/shots/discover.webp" alt="Busca de jogos na base do GameDB, com capas e plataformas" width="1440" height="900" loading="lazy" decoding="async">
+                        <img class="showcase__img" data-shot-img="squads" src="/assets/shots/squads.webp" alt="Busca de squad com jogadores ranqueados por compatibilidade" width="1440" height="900" loading="lazy" decoding="async">
+                    </div>
+                </figure>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             FEATURES
+             ============================================================ -->
+        <section class="section" id="features">
+            <div class="section__inner">
+                <header class="section__head" data-reveal>
+                    <p class="eyebrow">A plataforma</p>
+                    <h2 class="section__title">Nove sistemas.<br>Um registro.</h2>
+                    <p class="section__lede">
+                        Tudo que você faz aqui volta para o Passaporte, e o Passaporte deixa o próximo passo mais preciso.
+                    </p>
+                </header>
+
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3" id="featureGrid"></div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             JOURNEY
+             ============================================================ -->
+        <section class="section section--alt" id="journey">
+            <div class="section__inner">
+                <header class="section__head" data-reveal>
+                    <p class="eyebrow">Como funciona</p>
+                    <h2 class="section__title">Quatro passos.<br>Dois minutos.</h2>
+                </header>
+
+                <ol class="journey" id="journeySteps"></ol>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             COMUNIDADE (simulada, e dita assim)
+             ============================================================ -->
+        <section class="section" id="community" aria-labelledby="communityTitle">
+            <div class="section__inner">
+                <header class="section__head" data-reveal>
+                    <p class="eyebrow">Comunidade</p>
+                    <h2 class="section__title" id="communityTitle">Arena, Feed e Clãs.<br>Ligados ao seu Passaporte.</h2>
+                    <p class="section__lede">
+                        Jogue uma sessão com um squad compatível, marque aliados e rivais, desafie quem quiser enfrentar de novo e entre num clã que combina com o seu DNA. Tudo volta para o Passaporte como XP, conquistas e números.
+                    </p>
+                </header>
+                <div class="community-note" data-reveal>
+                    <p class="community-note__title">Uma comunidade simulada, sem esconder isso</p>
+                    <p class="community-note__text">
+                        A RIVALY não tem servidor nem outros usuários reais. Os outros jogadores são perfis criados para a demonstração, e tudo o que eles fazem (aceitar, recusar, postar, jogar) sai de um motor determinístico que mostra o motivo de cada decisão. Multiplayer de verdade está no roteiro, logo abaixo.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             APRESENTAÇÃO EM VÍDEO
+             Só aparece quando PRESENTATION_VIDEO_URL (js/pages/landing.js) tiver
+             um endereço. Sem vídeo, nenhum espaço fingindo que há um.
+             ============================================================ -->
+        <section class="section section--alt" id="video" aria-labelledby="videoTitle" hidden>
+            <div class="section__inner">
+                <header class="section__head">
+                    <p class="eyebrow">Apresentação</p>
+                    <h2 class="section__title" id="videoTitle">A RIVALY em poucos minutos.</h2>
+                </header>
+                <div class="ratio ratio-16x9 video-frame" id="videoFrame"></div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             COMPATIBILITY ENGINE
+             ============================================================ -->
+        <section class="section" id="engine">
+            <div class="section__inner engine">
+                <div class="engine__copy" data-reveal>
+                    <p class="eyebrow">Motor de Compatibilidade</p>
+                    <h2 class="section__title">Cada nota,<br>explicada em números.</h2>
+                    <p class="section__lede">
+                        Sete fatores, pontuados separadamente e somados. Você vê onde o jogador ganhou pontos e onde perdeu.
+                    </p>
+                    <ul class="engine__points">
+                        <li>Mesma busca, mesmo ranking. Sempre.</li>
+                        <li>Todo resultado mostra a própria conta.</li>
+                        <li>Uma função que falta no seu time vale mais que uma que você já tem.</li>
+                    </ul>
+                    <a class="btn btn-outline-light" href="login.html?mode=create">Testar o motor com o meu Passaporte</a>
+                </div>
+
+                <div class="engine__visual" data-reveal data-reveal-delay="120">
+                    <div class="weights" id="weightList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             O JOGADOR BRASILEIRO EM NÚMEROS
+             Dados do material da disciplina, cada um com a fonte citada.
+             ============================================================ -->
+        <section class="section section--alt" id="numbers" aria-labelledby="numbersTitle">
+            <div class="section__inner">
+                <header class="section__head" data-reveal>
+                    <p class="eyebrow">Contexto</p>
+                    <h2 class="section__title" id="numbersTitle">O jogador brasileiro<br>em números.</h2>
+                    <p class="section__lede">Por que um produto de identidade gamer faz sentido no Brasil.</p>
+                </header>
+                <div class="table-responsive numbers-table" data-reveal>
+                    <table class="table table-hover align-middle">
+                        <caption>Fontes indicadas em cada linha. Dados reunidos no material da disciplina Happy Game (FIAP).</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Indicador</th>
+                                <th scope="col">Dado</th>
+                                <th scope="col">Fonte</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Brasileiros que jogam jogos digitais</th>
+                                <td class="numeric">82,8%</td>
+                                <td>Pesquisa Game Brasil (PGB) 2025</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Jogos desenvolvidos no Brasil para celular</th>
+                                <td class="numeric">38%</td>
+                                <td>Pesquisa da Indústria Brasileira de Games 2022</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Jogos desenvolvidos no Brasil para PC</th>
+                                <td class="numeric">20%</td>
+                                <td>Pesquisa da Indústria Brasileira de Games 2022</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Desenvolvedoras de games no Brasil</th>
+                                <td class="numeric">762</td>
+                                <td>Material da disciplina Happy Game (FIAP)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             ROTEIRO — o que honestamente ainda não existe
+             ============================================================ -->
+        <section class="section section--alt" id="roadmap">
+            <div class="section__inner">
+                <header class="section__head" data-reveal>
+                    <p class="eyebrow">Roteiro</p>
+                    <h2 class="section__title">O que ainda não existe.</h2>
+                    <p class="section__lede">
+                        A V2 trouxe Arena, Feed e Clãs com uma comunidade simulada; a V3, a Agenda da semana e o bônus de equilíbrio da Arena. O que depende de servidor ou de integração real continua no roteiro, e nada disso aparece como botão.
+                    </p>
+                </header>
+
+                <div class="roadmap" id="roadmapList"></div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             CTA
+             ============================================================ -->
+        <section class="cta">
+            <div class="cta__inner" data-reveal>
+                <h2 class="cta__title">Find allies.<br>Meet rivals.</h2>
+                <p class="cta__text">
+                    Dez perguntas entram, um arquétipo sai. Em dois minutos você está jogando sessões, entrando num clã e subindo na Arena.
+                </p>
+                <div class="cta__actions">
+                    <a class="btn btn-primary btn-lg" href="login.html?mode=create">Criar meu Passaporte Gamer</a>
+                    <a class="btn btn-ghost btn-lg" href="login.html?mode=signin">Já tenho conta</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- chrome:footer:start -->
+    <footer class="site-footer">
+        <div class="container-fluid site-footer__inner">
+            <div class="row g-4">
+                <div class="col-12 col-lg-4">
+                    <img class="site-footer__logo" data-brand="logo" src="/assets/brand/logo-rivaly.png" alt="RIVALY" width="132" height="44" loading="lazy" decoding="async">
+                    <p class="site-footer__tagline">Find allies. Meet rivals.</p>
+                    <p class="site-footer__note">Sua identidade gamer em um só lugar. Tudo fica salvo neste navegador.</p>
+                </div>
+                <nav class="col-6 col-md-3 col-lg-2" aria-labelledby="footGroup-voce">
+                    <p class="site-footer__heading" id="footGroup-voce">Você</p>
+                    <ul class="list-unstyled site-footer__links">
+                        <li><a href="dashboard.html">Início</a></li>
+                        <li><a href="passport.html">Passaporte</a></li>
+                        <li><a href="library.html">Biblioteca</a></li>
+                        <li><a href="achievements.html">Conquistas</a></li>
+                    </ul>
+                </nav>
+                <nav class="col-6 col-md-3 col-lg-2" aria-labelledby="footGroup-comunidade">
+                    <p class="site-footer__heading" id="footGroup-comunidade">Comunidade</p>
+                    <ul class="list-unstyled site-footer__links">
+                        <li><a href="squads.html">Squads</a></li>
+                        <li><a href="arena.html">Arena</a></li>
+                        <li><a href="clans.html">Clãs</a></li>
+                        <li><a href="feed.html">Feed</a></li>
+                    </ul>
+                </nav>
+                <nav class="col-6 col-md-3 col-lg-2" aria-labelledby="footGroup-explorar">
+                    <p class="site-footer__heading" id="footGroup-explorar">Explorar</p>
+                    <ul class="list-unstyled site-footer__links">
+                        <li><a href="discover.html">Descobrir</a></li>
+                    </ul>
+                </nav>
+                <nav class="col-6 col-md-3 col-lg-2" aria-labelledby="footGroup-conta">
+                    <p class="site-footer__heading" id="footGroup-conta">Conta</p>
+                    <ul class="list-unstyled site-footer__links">
+                        <li><a href="settings.html">Configurações</a></li>
+                        <li><a href="seguranca.html">Segurança</a></li>
+                        <li><a href="sitemap.html">Mapa do site</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="site-footer__bottom">
+                <p class="site-footer__credits">RIVALY · Guilherme Oliveira Santos · RM576218 · FIAP 2026 · <a href="sitemap.html">Mapa do site</a></p>
+                <p class="site-footer__legal">Projeto acadêmico. As artes dos jogos pertencem aos seus detentores.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- chrome:footer:end -->
+    </div>
+
+    <!-- chrome:scripts:start -->
+    <script src="js/protocol-check.js"></script>
+    <script src="/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- chrome:scripts:end -->
+    <script type="module" src="js/pages/loading.js"></script>
+    <script type="module" src="js/pages/landing.js"></script>
+</body>
+</html>

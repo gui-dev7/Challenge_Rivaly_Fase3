@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-motion="full" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Como a RIVALY protege a sua conta: o padrão de senha, o hash, o bloqueio por tentativas e a validação no servidor, com demonstração ao vivo.">
+    <meta name="theme-color" content="#050505">
+    <title>Segurança da conta — RIVALY</title>
+
+    <link rel="icon" type="image/png" href="/assets/brand/icon-rivaly.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="RIVALY">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:title" content="Segurança da conta — RIVALY">
+    <meta property="og:description" content="O padrão de senha da RIVALY, com demonstração ao vivo.">
+    <meta property="og:image" content="/assets/brand/social.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="apple-touch-icon" href="/assets/brand/social-square.png">
+
+    <!-- chrome:styles:start -->
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/community.css">
+    <link rel="stylesheet" href="css/pages/avatar.css">
+    <!-- chrome:styles:end -->
+    <link rel="stylesheet" href="css/pages/security.css">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+
+    <div class="protocol-warning" id="protocolWarning" hidden>
+        <div class="protocol-warning__inner">
+            <h2>Abra a RIVALY por um servidor local</h2>
+            <p>Este projeto usa ES Modules nativos, que o navegador recusa carregar via <code>file://</code>. Suba qualquer servidor estático na pasta do projeto e reabra a página.</p>
+            <pre>npm run dev
+# ou: python -m http.server 5500</pre>
+        </div>
+    </div>
+
+    <!-- chrome:public-header:start -->
+    <nav class="navbar navbar-expand-md site-header public-header" aria-label="Navegação pública">
+        <div class="container-fluid site-header__inner">
+            <a class="navbar-brand sidebar__brand" href="index.html" aria-label="Página inicial da RIVALY">
+                <span class="brand-mark" aria-hidden="true"><img class="brand-mark__img" data-brand="icon" src="/assets/brand/icon-rivaly.png" alt="" width="32" height="32" decoding="async"></span>
+                <span class="brand-name">
+                    <span class="brand-name__top">RIVALY</span>
+                    <span class="brand-name__sub">Rival + Ally</span>
+                </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#publicNav" aria-controls="publicNav" aria-expanded="false" aria-label="Abrir menu">
+                <svg class="" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+            <div class="collapse navbar-collapse" id="publicNav">
+                <ul class="navbar-nav ms-md-4 me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html" data-nav-id="home">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sitemap.html" data-nav-id="sitemap">Mapa do site</a></li>
+                    <li class="nav-item"><a class="nav-link" href="seguranca.html" data-nav-id="security">Segurança</a></li>
+                </ul>
+                <div class="d-flex flex-wrap gap-2 py-2 py-md-0">
+                    <a class="btn btn-outline-light btn-sm" href="login.html?mode=signin">Entrar</a>
+                    <a class="btn btn-primary btn-sm" href="login.html?mode=create">Criar meu Passaporte</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- chrome:public-header:end -->
+
+    <div class="app">
+        <!-- chrome:app-nav:start -->
+        <aside class="sidebar-shell" aria-label="Navegação principal">
+            <div class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="appNav" aria-labelledby="appNavTitle">
+                <div class="offcanvas-header sidebar__header">
+                    <a class="sidebar__brand" href="dashboard.html" aria-label="RIVALY, ir para o Início">
+                        <span class="brand-mark" aria-hidden="true"><img class="brand-mark__img" data-brand="icon" src="/assets/brand/icon-rivaly.png" alt="" width="32" height="32" decoding="async"></span>
+                        <span class="brand-name">
+                            <span class="brand-name__top">RIVALY</span>
+                            <span class="brand-name__sub">Rival + Ally</span>
+                        </span>
+                    </a>
+                    <h2 class="visually-hidden" id="appNavTitle">Menu da RIVALY</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#appNav" aria-label="Fechar menu"></button>
+                </div>
+                <div class="offcanvas-body sidebar__body">
+                    <a class="sidebar__brand d-none d-lg-flex" href="dashboard.html" aria-label="RIVALY, ir para o Início">
+                        <span class="brand-mark" aria-hidden="true"><img class="brand-mark__img" data-brand="icon" src="/assets/brand/icon-rivaly.png" alt="" width="32" height="32" decoding="async"></span>
+                        <span class="brand-name">
+                            <span class="brand-name__top">RIVALY</span>
+                            <span class="brand-name__sub">Rival + Ally</span>
+                        </span>
+                    </a>
+                    <nav class="sidebar__nav" aria-label="Seções do app">
+                        <p class="sidebar__group-label" id="navGroup-voce">Você</p>
+                        <ul class="nav flex-column sidebar__list" aria-labelledby="navGroup-voce">
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="dashboard.html" data-nav-id="dashboard">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1H10v-6h4v6h3.5a1 1 0 0 0 1-1V9.5"/></svg>
+                                    <span>Início</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="passport.html" data-nav-id="passport">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><circle cx="8.5" cy="11" r="2.5"/><path d="M4.5 17c.6-1.8 2.1-2.8 4-2.8s3.4 1 4 2.8"/><path d="M15 9.5h4M15 12.5h4M15 15.5h2.5"/></svg>
+                                    <span>Passaporte</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="library.html" data-nav-id="library">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.2"/><rect x="10" y="4" width="5" height="16" rx="1.2"/><path d="m17.4 5.7 3.2 14"/></svg>
+                                    <span>Biblioteca</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="achievements.html" data-nav-id="achievements">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v6a5 5 0 0 1-10 0z"/><path d="M7 6H4.5v1.5A3.5 3.5 0 0 0 8 11"/><path d="M17 6h2.5v1.5A3.5 3.5 0 0 1 16 11"/><path d="M12 15v3"/><path d="M8.5 21h7l-.8-3h-5.4z"/></svg>
+                                    <span>Conquistas</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <p class="sidebar__group-label" id="navGroup-comunidade">Comunidade</p>
+                        <ul class="nav flex-column sidebar__list" aria-labelledby="navGroup-comunidade">
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="squads.html" data-nav-id="squads">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.7-3.2 3-5 6-5s5.3 1.8 6 5"/><path d="M16 5.3a3.2 3.2 0 0 1 0 5.9"/><path d="M18 15.4c2 .7 3.3 2.3 3.8 4.6"/></svg>
+                                    <span>Squads</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="arena.html" data-nav-id="arena">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
+                                    <span>Arena</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="clans.html" data-nav-id="clans">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 5.8v5.4c0 4.3 2.9 8.2 7 9.6 4.1-1.4 7-5.3 7-9.6V5.8z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>
+                                    <span>Clãs</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="feed.html" data-nav-id="feed">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.2 2.4 3.4 5.4 3.4 8.5S14.2 18.1 12 20.5c-2.2-2.4-3.4-5.4-3.4-8.5S9.8 5.9 12 3.5z"/></svg>
+                                    <span>Feed</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <p class="sidebar__group-label" id="navGroup-explorar">Explorar</p>
+                        <ul class="nav flex-column sidebar__list" aria-labelledby="navGroup-explorar">
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="discover.html" data-nav-id="discover">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></svg>
+                                    <span>Descobrir</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <p class="sidebar__group-label" id="navGroup-conta">Conta</p>
+                        <ul class="nav flex-column sidebar__list" aria-labelledby="navGroup-conta">
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="settings.html" data-nav-id="settings">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M4.5 7.5l2 1.2M17.5 15.3l2 1.2M4.5 16.5l2-1.2M17.5 8.7l2-1.2"/></svg>
+                                    <span>Configurações</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="seguranca.html" data-nav-id="security">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10" width="15" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></svg>
+                                    <span>Segurança</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link sidebar__link" href="sitemap.html" data-nav-id="sitemap">
+                                    <svg class="sidebar__icon" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5.2-5.2 2 2-5.2z"/></svg>
+                                    <span>Mapa do site</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="sidebar__footer" data-mini-passport></div>
+                </div>
+            </div>
+        </aside>
+        <!-- chrome:app-nav:end -->
+
+        <div class="main">
+            <!-- chrome:topbar:start -->
+            <header class="topbar navbar" data-topbar>
+                <button type="button" class="menu-toggle d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#appNav" aria-controls="appNav" aria-label="Abrir menu">
+                    <svg class="" aria-hidden="true" focusable="false" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                </button>
+                <div class="topbar__heading">
+                    <p class="topbar__title" data-topbar-title>RIVALY</p>
+                    <p class="topbar__subtitle" data-topbar-subtitle></p>
+                </div>
+                <div class="topbar__actions">
+                    <div class="topbar__xp d-none d-md-flex" title="Experiência até o próximo nível">
+                        <span class="level-pill">
+                            <span class="level-pill__num numeric" data-xp-level>1</span>
+                            <span class="level-pill__label">Nível</span>
+                        </span>
+                        <span class="progress progress--thin progress--xp topbar__xp-bar" role="progressbar" aria-label="Progresso até o próximo nível" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-xp-bar>
+                            <span class="progress__fill" data-progress="0"></span>
+                        </span>
+                        <span class="topbar__xp-text numeric" data-xp-text>0/1.000</span>
+                    </div>
+                    <div class="dropdown invites" data-invites>
+                        <button type="button" class="btn btn-outline-light btn-icon invites__toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-label="Centro de convites">
+                            <svg class="" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 10a5.5 5.5 0 0 1 11 0c0 4 1.5 5.5 1.5 5.5H5S6.5 14 6.5 10z"/><path d="M10.2 19a2 2 0 0 0 3.6 0"/></svg>
+                            <span class="badge invites__count" data-invites-count hidden>0</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end invites__menu" data-invites-menu>
+                            <p class="dropdown-header invites__title">Convites e desafios</p>
+                            <div class="invites__list" data-invites-list></div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-light btn-icon" data-logout aria-label="Sair da conta">
+                        <svg class="" aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 16.5V19a1.5 1.5 0 0 1-1.5 1.5H5.5A1.5 1.5 0 0 1 4 19V5a1.5 1.5 0 0 1 1.5-1.5H13A1.5 1.5 0 0 1 14.5 5v2.5"/><path d="M9.5 12H21"/><path d="m17.5 8.5 3.5 3.5-3.5 3.5"/></svg>
+                    </button>
+                </div>
+            </header>
+            <!-- chrome:topbar:end -->
+
+            <main class="page page--narrow page-enter" id="main-content">
+                <div class="page__header">
+                    <div>
+                        <p class="sec-eyebrow">Enterprise Challenge · Cibersegurança e IA</p>
+                        <h1 class="page__title">Segurança da conta</h1>
+                        <p class="page__lede">
+                            O laboratório do padrão de senha da RIVALY. Tudo o que está marcado como "Funciona" roda de verdade, no seu navegador ou no servidor da demo. O que ainda é plano está marcado como "Proposta".
+                        </p>
+                    </div>
+                </div>
+
+                <ul class="sec-legend" aria-label="Legenda das marcações">
+                    <li><span class="tag tag--accent">Funciona</span> implementado e com testes</li>
+                    <li><span class="tag tag--primary">Servidor</span> precisa do servidor da demo (<code>npm run demo</code>)</li>
+                    <li><span class="tag tag--warning">Proposta</span> planejado, ainda não implementado</li>
+                </ul>
+
+                <!-- ---------- O padrão ---------- -->
+                <section aria-labelledby="policyTitle">
+                    <div class="section-head">
+                        <h2 class="section-head__title" id="policyTitle">O padrão em oito regras</h2>
+                    </div>
+                    <ol class="sec-rules">
+                        <li><div><strong>15 caracteres ou mais</strong>, até 128. Frases com espaço, acento e emoji valem.</div><span class="tag tag--accent">Funciona</span></li>
+                        <li><div><strong>Sem regra de composição obrigatória.</strong> "1 maiúscula e 1 símbolo" produz "Senha@2026", que todo ataque testa.</div><span class="tag tag--accent">Funciona</span></li>
+                        <li><div><strong>Senhas comuns bloqueadas</strong>, com variações (p@ssw0rd, minecraft2024!), nomes de jogos, times e do próprio serviço.</div><span class="tag tag--accent">Funciona</span></li>
+                        <li><div><strong>Nada de dados pessoais:</strong> o apelido e o e-mail não podem aparecer na senha.</div><span class="tag tag--accent">Funciona</span></li>
+                        <li><div><strong>Senhas vazadas recusadas</strong> pelo Have I Been Pwned, com k-anonimato: só 5 caracteres do hash saem do aparelho.</div><span class="tag tag--accent">Funciona</span></li>
+                        <li><div><strong>Hash lento com sal por conta:</strong> argon2id no servidor, PBKDF2 com 600 mil iterações no navegador.</div><span class="tag tag--accent">Funciona</span></li>
+                        <li><div><strong>Bloqueio progressivo:</strong> no 5º erro seguido, pausa de 30 s que dobra até 15 min, por e-mail e por IP, com mensagem genérica.</div><span class="tag tag--accent">Funciona</span></li>
+                        <li><div><strong>Recuperação segura e MFA opcional:</strong> link de uso único com validade de 15 min, TOTP e, depois, passkeys.</div><span class="tag tag--warning">Proposta</span></li>
+                    </ol>
+                </section>
+
+                <!-- ---------- 1. Testar ---------- -->
+                <section class="sec-card" aria-labelledby="testTitle">
+                    <div class="sec-card__head">
+                        <h2 class="sec-card__title" id="testTitle">1. Teste uma senha</h2>
+                        <span class="tag tag--accent">Funciona</span>
+                    </div>
+                    <p class="sec-card__lede">É a mesma regra do cadastro e do servidor (<code>js/core/password-policy.js</code>). Nada do que você digita aqui é guardado.</p>
+
+                    <form id="labForm" novalidate autocomplete="off">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="labNickname">Apelido (contexto)</label>
+                                <input class="form-control" id="labNickname" type="text" value="Nova_7" maxlength="18" autocomplete="off">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="labEmail">E-mail (contexto)</label>
+                                <input class="form-control" id="labEmail" type="email" value="nova.silva@exemplo.com" autocomplete="off">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="labPassword">Senha para testar</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="labPassword" type="password" maxlength="200" autocomplete="off" spellcheck="false">
+                                    <button type="button" class="btn btn-outline-light auth__reveal" data-reveal-password="labPassword" aria-label="Mostrar senha" aria-pressed="false"></button>
+                                </div>
+                                <div id="labMeter"></div>
+                            </div>
+                        </div>
+                        <div class="sec-samples">
+                            <p class="sec-samples__label" id="samplesLabel">Experimente:</p>
+                            <div class="chip-set" role="group" aria-labelledby="samplesLabel">
+                                <button type="button" class="chip" data-sample="Senha@2026">Senha@2026</button>
+                                <button type="button" class="chip" data-sample="minecraft2024!!!">minecraft2024!!!</button>
+                                <button type="button" class="chip" data-sample="password12345678">password12345678</button>
+                                <button type="button" class="chip" data-sample="Nova_7 joga muito">Nova_7 joga muito</button>
+                                <button type="button" class="chip" data-sample="pizza de quinta com o squad">pizza de quinta com o squad</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <p class="sec-pwned" id="pwnedDetail" hidden></p>
+                </section>
+
+                <!-- ---------- 2. Hash ---------- -->
+                <section class="sec-card" aria-labelledby="hashTitle">
+                    <div class="sec-card__head">
+                        <h2 class="sec-card__title" id="hashTitle">2. Como a senha é guardada</h2>
+                        <span class="tag tag--accent">Funciona</span>
+                    </div>
+                    <p class="sec-card__lede">A senha do teste acima, guardada duas vezes. No formato antigo os dois hashes saem iguais, então quem tem a mesma senha fica com o mesmo hash. No novo, cada conta tem sal próprio e 600 mil rodadas de PBKDF2.</p>
+                    <button type="button" class="btn btn-primary" id="hashRun">Gerar os hashes</button>
+                    <p class="sec-note" id="hashEmpty" hidden>Digite uma senha no teste acima primeiro.</p>
+                    <div class="sec-compare" id="hashCompare" hidden>
+                        <div class="sec-compare__col" data-kind="before">
+                            <h3 class="sec-compare__title">Antes (V3.0)</h3>
+                            <p class="sec-compare__meta">SHA-256 + sal fixo, igual para todos</p>
+                            <code class="sec-hash" id="hashOld1"></code>
+                            <code class="sec-hash" id="hashOld2"></code>
+                            <p class="sec-compare__verdict" id="hashOldVerdict"></p>
+                        </div>
+                        <div class="sec-compare__col" data-kind="after">
+                            <h3 class="sec-compare__title">Agora (V3.1)</h3>
+                            <p class="sec-compare__meta">PBKDF2-SHA256 · 600.000 iterações · sal aleatório de 16 bytes</p>
+                            <code class="sec-hash" id="hashNew1"></code>
+                            <code class="sec-hash" id="hashNew2"></code>
+                            <p class="sec-compare__verdict" id="hashNewVerdict"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ---------- 3. Bloqueio ---------- -->
+                <section class="sec-card" aria-labelledby="lockTitle">
+                    <div class="sec-card__head">
+                        <h2 class="sec-card__title" id="lockTitle">3. Bloqueio por tentativas</h2>
+                        <span class="tag tag--accent">Funciona</span>
+                    </div>
+                    <p class="sec-card__lede">O mesmo módulo (<code>js/core/throttle.js</code>) protege o login deste navegador e o do servidor. Aqui ele roda num simulador, com o relógio de verdade.</p>
+                    <div class="sec-lock">
+                        <div class="sec-lock__actions">
+                            <button type="button" class="btn btn-outline-light" id="lockFail">Errar a senha</button>
+                            <button type="button" class="btn btn-outline-light" id="lockOk">Acertar a senha</button>
+                            <button type="button" class="btn btn-link" id="lockReset">Zerar</button>
+                        </div>
+                        <p class="sec-lock__status" id="lockStatus" role="status" aria-live="polite">Nenhum erro ainda.</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table sec-table">
+                            <caption>Pausa depois de cada erro seguido</caption>
+                            <thead><tr><th scope="col">Erro seguido</th><th scope="col">Pausa</th></tr></thead>
+                            <tbody id="lockTable"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ---------- 4. Servidor ---------- -->
+                <section class="sec-card" aria-labelledby="serverTitle">
+                    <div class="sec-card__head">
+                        <h2 class="sec-card__title" id="serverTitle">4. Validação no servidor</h2>
+                        <span class="tag tag--primary">Servidor</span>
+                    </div>
+                    <p class="sec-card__lede">O cliente ajuda, o servidor decide. Aqui as contas vão para a API da demo (<code>server/</code>), que guarda a senha com argon2id e bloqueia por e-mail e por IP.</p>
+                    <p class="sec-server-status" id="serverStatus" data-state="checking" role="status">Procurando o servidor…</p>
+
+                    <div class="row g-4" id="serverForms">
+                        <div class="col-12 col-lg-6">
+                            <form class="sec-form" id="srvRegister" novalidate>
+                                <h3 class="sec-form__title">Criar conta no servidor</h3>
+                                <label class="form-label" for="srvRegNickname">Apelido</label>
+                                <input class="form-control" id="srvRegNickname" type="text" maxlength="18" autocomplete="off" value="Nova_7">
+                                <label class="form-label" for="srvRegEmail">E-mail</label>
+                                <input class="form-control" id="srvRegEmail" type="email" autocomplete="off" value="nova@exemplo.com">
+                                <label class="form-label" for="srvRegPassword">Senha</label>
+                                <input class="form-control" id="srvRegPassword" type="password" autocomplete="new-password" maxlength="200">
+                                <button type="submit" class="btn btn-primary">Criar no servidor</button>
+                            </form>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <form class="sec-form" id="srvLogin" novalidate>
+                                <h3 class="sec-form__title">Entrar pelo servidor</h3>
+                                <label class="form-label" for="srvLogEmail">E-mail</label>
+                                <input class="form-control" id="srvLogEmail" type="email" autocomplete="off" value="nova@exemplo.com">
+                                <label class="form-label" for="srvLogPassword">Senha</label>
+                                <input class="form-control" id="srvLogPassword" type="password" autocomplete="current-password" maxlength="200">
+                                <button type="submit" class="btn btn-outline-light">Entrar</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="sec-response-wrap">
+                        <p class="sec-response__label" id="srvResponseLabel">Resposta do servidor</p>
+                        <pre class="sec-response" id="srvResponse" aria-labelledby="srvResponseLabel" aria-live="polite">As respostas aparecem aqui, com o código HTTP.</pre>
+                    </div>
+                    <button type="button" class="btn btn-outline-light btn-sm" id="srvAccounts">Ver como o servidor guardou as senhas</button>
+                    <div id="srvAccountsList"></div>
+                </section>
+
+                <!-- ---------- Proposta ---------- -->
+                <section aria-labelledby="nextTitle">
+                    <div class="section-head">
+                        <h2 class="section-head__title" id="nextTitle">O que vem depois</h2>
+                    </div>
+                    <div class="sec-next">
+                        <article class="sec-next__item"><span class="tag tag--warning">Proposta</span><h3>MFA opcional</h3><p>App autenticador (TOTP, RFC 6238) com códigos de recuperação. Obrigatório para líderes de clã, que mexem na conta de outras pessoas.</p></article>
+                        <article class="sec-next__item"><span class="tag tag--warning">Proposta</span><h3>Recuperação de conta</h3><p>Link de uso único, aleatório (32 bytes), guardado como hash, válido por 15 min. A resposta é a mesma exista o e-mail ou não. Ao trocar a senha, todas as sessões caem.</p></article>
+                        <article class="sec-next__item"><span class="tag tag--warning">Proposta</span><h3>Passkeys</h3><p>Login sem senha com WebAuthn: a chave fica no aparelho e não pode ser enviada para um site falso.</p></article>
+                        <article class="sec-next__item"><span class="tag tag--warning">Proposta</span><h3>Login de risco com IA</h3><p>Um modelo pontua cada login (aparelho novo, horário, país, ritmo de tentativas). Risco alto pede o MFA; risco baixo passa direto.</p></article>
+                        <article class="sec-next__item"><span class="tag tag--warning">Proposta</span><h3>Aviso de novo acesso</h3><p>E-mail quando a conta entra de um aparelho novo, com um botão "não fui eu" que encerra as sessões.</p></article>
+                        <article class="sec-next__item"><span class="tag tag--warning">Proposta</span><h3>Banco e sessões reais</h3><p>Contas num banco com criptografia em repouso, sessões com expiração e revogação, e logs de segurança sem senha nem token.</p></article>
+                    </div>
+                </section>
+
+                <!-- ---------- Base ---------- -->
+                <section aria-labelledby="refsTitle">
+                    <div class="section-head">
+                        <h2 class="section-head__title" id="refsTitle">Em que este padrão se baseia</h2>
+                    </div>
+                    <ul class="sec-refs">
+                        <li><strong>NIST SP 800-63B-4</strong> (2025): tamanho mínimo, sem composição obrigatória, lista de bloqueio e senhas comprometidas.</li>
+                        <li><strong>OWASP ASVS 5.0</strong>, capítulo V6 (Authentication): requisitos verificáveis de senha, bloqueio e recuperação.</li>
+                        <li><strong>OWASP Password Storage Cheat Sheet</strong>: argon2id (19 MiB, t=2, p=1) e PBKDF2-SHA256 com 600.000 iterações.</li>
+                        <li><strong>OWASP Authentication Cheat Sheet</strong>: mensagem genérica, bloqueio temporário e proteção contra enumeração de contas.</li>
+                        <li><strong>Have I Been Pwned, Pwned Passwords</strong>: consulta por intervalo com k-anonimato.</li>
+                        <li><strong>LGPD</strong> (Lei 13.709/2018), art. 46: medidas de segurança para proteger dados pessoais.</li>
+                        <li><strong>Zero Trust</strong> (NIST SP 800-207 e o modelo da Palo Alto Networks): nunca confiar no cliente, verificar a cada pedido.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- chrome:bottom-nav:start -->
+    <nav class="bottom-nav d-lg-none" aria-label="Navegação rápida">
+        <a class="bottom-nav__item" href="dashboard.html" data-nav-id="dashboard">
+            <svg class="" aria-hidden="true" focusable="false" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1H10v-6h4v6h3.5a1 1 0 0 0 1-1V9.5"/></svg>
+            <span>Início</span>
+        </a>
+        <a class="bottom-nav__item" href="passport.html" data-nav-id="passport">
+            <svg class="" aria-hidden="true" focusable="false" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><circle cx="8.5" cy="11" r="2.5"/><path d="M4.5 17c.6-1.8 2.1-2.8 4-2.8s3.4 1 4 2.8"/><path d="M15 9.5h4M15 12.5h4M15 15.5h2.5"/></svg>
+            <span>Passaporte</span>
+        </a>
+        <a class="bottom-nav__item" href="squads.html" data-nav-id="squads">
+            <svg class="" aria-hidden="true" focusable="false" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.7-3.2 3-5 6-5s5.3 1.8 6 5"/><path d="M16 5.3a3.2 3.2 0 0 1 0 5.9"/><path d="M18 15.4c2 .7 3.3 2.3 3.8 4.6"/></svg>
+            <span>Squads</span>
+        </a>
+        <a class="bottom-nav__item" href="arena.html" data-nav-id="arena">
+            <svg class="" aria-hidden="true" focusable="false" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
+            <span>Arena</span>
+        </a>
+        <button type="button" class="bottom-nav__item" data-bs-toggle="offcanvas" data-bs-target="#appNav" aria-controls="appNav">
+            <svg class="" aria-hidden="true" focusable="false" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+            <span>Mais</span>
+        </button>
+    </nav>
+    <!-- chrome:bottom-nav:end -->
+
+    <!-- chrome:footer:start -->
+    <footer class="site-footer">
+        <div class="container-fluid site-footer__inner">
+            <div class="row g-4">
+                <div class="col-12 col-lg-4">
+                    <img class="site-footer__logo" data-brand="logo" src="/assets/brand/logo-rivaly.png" alt="RIVALY" width="132" height="44" loading="lazy" decoding="async">
+                    <p class="site-footer__tagline">Find allies. Meet rivals.</p>
+                    <p class="site-footer__note">Sua identidade gamer em um só lugar. Tudo fica salvo neste navegador.</p>
+                </div>
+                <nav class="col-6 col-md-3 col-lg-2" aria-labelledby="footGroup-voce">
+                    <p class="site-footer__heading" id="footGroup-voce">Você</p>
+                    <ul class="list-unstyled site-footer__links">
+                        <li><a href="dashboard.html">Início</a></li>
+                        <li><a href="passport.html">Passaporte</a></li>
+                        <li><a href="library.html">Biblioteca</a></li>
+                        <li><a href="achievements.html">Conquistas</a></li>
+                    </ul>
+                </nav>
+                <nav class="col-6 col-md-3 col-lg-2" aria-labelledby="footGroup-comunidade">
+                    <p class="site-footer__heading" id="footGroup-comunidade">Comunidade</p>
+                    <ul class="list-unstyled site-footer__links">
+                        <li><a href="squads.html">Squads</a></li>
+                        <li><a href="arena.html">Arena</a></li>
+                        <li><a href="clans.html">Clãs</a></li>
+                        <li><a href="feed.html">Feed</a></li>
+                    </ul>
+                </nav>
+                <nav class="col-6 col-md-3 col-lg-2" aria-labelledby="footGroup-explorar">
+                    <p class="site-footer__heading" id="footGroup-explorar">Explorar</p>
+                    <ul class="list-unstyled site-footer__links">
+                        <li><a href="discover.html">Descobrir</a></li>
+                    </ul>
+                </nav>
+                <nav class="col-6 col-md-3 col-lg-2" aria-labelledby="footGroup-conta">
+                    <p class="site-footer__heading" id="footGroup-conta">Conta</p>
+                    <ul class="list-unstyled site-footer__links">
+                        <li><a href="settings.html">Configurações</a></li>
+                        <li><a href="seguranca.html">Segurança</a></li>
+                        <li><a href="sitemap.html">Mapa do site</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="site-footer__bottom">
+                <p class="site-footer__credits">RIVALY · Guilherme Oliveira Santos · RM576218 · FIAP 2026 · <a href="sitemap.html">Mapa do site</a></p>
+                <p class="site-footer__legal">Projeto acadêmico. As artes dos jogos pertencem aos seus detentores.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- chrome:footer:end -->
+
+    <!-- chrome:scripts:start -->
+    <script src="js/protocol-check.js"></script>
+    <script src="/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- chrome:scripts:end -->
+    <script type="module" src="js/pages/security.js"></script>
+</body>
+</html>

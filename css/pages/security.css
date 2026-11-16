@@ -1,0 +1,382 @@
+/* ============================================================
+   RIVALY — SEGURANÇA DA CONTA (seguranca.html)
+   O medidor de força mora em components.css (.pw-meter), porque
+   também aparece no cadastro.
+   ============================================================ */
+
+.sec-eyebrow {
+    margin-bottom: var(--space-2xs);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+}
+
+.sec-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-lg);
+    margin: 0 0 var(--space-xl);
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.sec-legend li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+/* Âncoras do mapa do site não ficam escondidas sob o cabeçalho fixo. */
+.sec-card,
+.section-head__title {
+    scroll-margin-top: 88px;
+}
+
+main code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    color: var(--color-text-secondary);
+}
+
+/* ---------- Regras ---------- */
+.sec-rules {
+    display: grid;
+    gap: 1px;
+    margin: 0 0 var(--space-2xl);
+    padding: 0;
+    list-style: none;
+    counter-reset: rule;
+    border: 1px solid var(--color-border);
+    background: var(--color-border);
+}
+
+.sec-rules li {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-surface);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    color: var(--color-text-secondary);
+    counter-increment: rule;
+}
+
+.sec-rules li::before {
+    content: counter(rule, decimal-leading-zero);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1;
+    color: var(--color-primary);
+}
+
+.sec-rules strong { color: var(--color-text); }
+
+@media (max-width: 575.98px) {
+    .sec-rules li { grid-template-columns: 2rem minmax(0, 1fr); }
+    .sec-rules li .tag { grid-column: 2; justify-self: start; }
+}
+
+/* ---------- Cartões de demonstração ---------- */
+.sec-card {
+    margin-bottom: var(--space-xl);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-primary);
+    background: var(--color-surface);
+}
+
+.sec-card__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xs);
+}
+
+.sec-card__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: var(--font-display-weight);
+    font-size: 1.75rem;
+    line-height: 1.1;
+}
+
+.sec-card__lede {
+    max-width: 68ch;
+    margin: var(--space-xs) 0 var(--space-md);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+
+.sec-note {
+    margin: var(--space-sm) 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+/* ---------- 1. Testar ---------- */
+.sec-samples {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-md);
+}
+
+.sec-samples__label {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.sec-samples .chip {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+}
+
+.sec-pwned {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    margin: var(--space-md) 0 0;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px dashed var(--color-primary-line);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+.sec-pwned svg { flex: none; margin-top: 2px; color: var(--color-primary); }
+.sec-pwned[data-state="pwned"] { border-color: var(--color-danger); }
+.sec-pwned[data-state="pwned"] svg { color: var(--color-danger); }
+.sec-pwned code { color: var(--color-primary-strong); }
+
+/* ---------- 2. Hash ---------- */
+.sec-compare {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+@media (max-width: 767.98px) {
+    .sec-compare { grid-template-columns: minmax(0, 1fr); }
+}
+
+.sec-compare__col {
+    display: grid;
+    align-content: start;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-inset);
+}
+
+.sec-compare__col[data-kind="before"] { border-left: 3px solid var(--color-danger); }
+.sec-compare__col[data-kind="after"] { border-left: 3px solid var(--color-success); }
+
+.sec-compare__title {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: var(--font-bold);
+}
+
+.sec-compare__meta,
+.sec-compare__verdict {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.sec-compare__verdict { color: var(--color-text-secondary); }
+
+.sec-hash {
+    display: block;
+    padding: var(--space-xs);
+    border: 1px solid var(--color-border-soft);
+    background: var(--color-background);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    color: var(--color-text-secondary);
+}
+
+/* ---------- 3. Bloqueio ---------- */
+.sec-lock {
+    display: grid;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.sec-lock__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+.sec-lock__status {
+    margin: 0;
+    padding: var(--space-sm) var(--space-md);
+    border-left: 3px solid var(--color-border-strong);
+    background: var(--color-surface-secondary);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+}
+
+.sec-lock__status[data-state="warn"] { border-left-color: var(--color-warning); }
+.sec-lock__status[data-state="locked"] { border-left-color: var(--color-danger); color: var(--color-text); }
+
+.sec-table {
+    max-width: 420px;
+    margin: 0;
+    font-size: var(--text-sm);
+}
+
+.sec-table caption {
+    caption-side: top;
+    padding-top: 0;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.sec-table tr[data-active] td {
+    background: var(--color-primary-soft);
+    color: var(--color-primary-strong);
+    font-weight: var(--font-semibold);
+}
+
+/* ---------- 4. Servidor ---------- */
+.sec-server-status {
+    margin: 0 0 var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+.sec-server-status[data-state="online"] { border-color: rgba(61, 220, 132, 0.45); background: var(--color-success-soft); }
+.sec-server-status[data-state="partial"] { border-color: var(--color-primary-line); background: var(--color-primary-ghost); }
+.sec-server-status[data-state="offline"] { border-color: rgba(255, 158, 31, 0.45); background: var(--color-warning-soft); }
+
+.sec-form {
+    display: grid;
+    gap: var(--space-2xs);
+}
+
+.sec-form__title {
+    margin: 0 0 var(--space-xs);
+    font-size: var(--text-md);
+    font-weight: var(--font-bold);
+}
+
+.sec-form .form-label { margin: var(--space-xs) 0 0; }
+.sec-form .btn { margin-top: var(--space-sm); justify-self: start; }
+
+.sec-response-wrap { margin: var(--space-lg) 0 var(--space-md); }
+
+.sec-response__label {
+    margin: 0 0 var(--space-2xs);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.sec-response {
+    min-height: 4.5rem;
+    max-height: 22rem;
+    margin: 0;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-border-strong);
+    background: var(--color-surface-inset);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    overflow: auto;
+    color: var(--color-text-secondary);
+}
+
+.sec-response[data-state="ok"] { border-left-color: var(--color-success); }
+.sec-response[data-state="error"] { border-left-color: var(--color-danger); }
+
+.sec-accounts {
+    display: grid;
+    gap: var(--space-xs);
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sec-accounts li { display: grid; gap: var(--space-2xs); }
+
+.sec-accounts__who {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.sec-accounts__who strong { color: var(--color-text); margin-right: var(--space-xs); }
+
+/* ---------- Proposta ---------- */
+.sec-next {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+}
+
+.sec-next__item {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border: 1px dashed var(--color-border-strong);
+    background: var(--color-background-elevated);
+}
+
+.sec-next__item h3 {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: var(--font-bold);
+}
+
+.sec-next__item p {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+
+/* ---------- Base ---------- */
+.sec-refs {
+    display: grid;
+    gap: var(--space-xs);
+    margin: 0 0 var(--space-xl);
+    padding-left: var(--space-lg);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+
+.sec-refs strong { color: var(--color-text); }
+
+/* Botão de mostrar senha (o mesmo visual do login). */
+.auth__reveal {
+    --bs-btn-padding-x: 0;
+    width: 46px;
+    min-height: 46px;
+    color: var(--color-text-faint);
+}

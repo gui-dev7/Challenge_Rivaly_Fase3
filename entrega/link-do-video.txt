@@ -1,0 +1,3 @@
+# Cole na linha de baixo o link do vídeo no YouTube (visibilidade: Não listado).
+# Exemplo: https://youtu.be/AbCdEf12345
+# Depois rode: npm run entrega

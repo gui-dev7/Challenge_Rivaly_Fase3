@@ -1,0 +1,728 @@
+/* ============================================================
+   RIVALY — LAYOUT
+   A moldura do app sobre o Bootstrap:
+     - sidebar = .offcanvas-lg: coluna fixa a partir de 992px e
+       gaveta (offcanvas) abaixo disso;
+     - topo (.topbar.navbar) com título, XP e centro de convites;
+     - barra inferior com 5 destinos no celular (o 5º abre o menu);
+     - rodapé com créditos e o mapa do site.
+   Os breakpoints são os do Bootstrap (sm 576, md 768, lg 992, xl 1200).
+   ============================================================ */
+
+/* ============================================================
+   DENSITY
+   Written to <html data-density> by the Settings page. Overrides
+   spacing tokens only — no component needs to know about it.
+   ============================================================ */
+[data-density="compact"] {
+    --space-md: 0.875rem;
+    --space-lg: 1.125rem;
+    --space-xl: 1.5rem;
+    --space-2xl: 2.25rem;
+    --space-3xl: 3rem;
+    --topbar-height: 56px;
+}
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+.app {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+@media (min-width: 992px) {
+    .app {
+        grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+    }
+}
+
+/* ============================================================
+   SIDEBAR / OFFCANVAS
+   ============================================================ */
+
+/* No celular a "casca" some do fluxo: o offcanvas dentro dela é fixo. */
+.sidebar-shell {
+    display: contents;
+}
+
+@media (min-width: 992px) {
+    .sidebar-shell {
+        display: block;
+        position: sticky;
+        top: 0;
+        z-index: var(--z-sidebar);
+        height: 100vh;
+        height: 100dvh;
+        border-right: 1px solid var(--color-border-soft);
+        background: var(--color-background-elevated);
+    }
+
+    .sidebar {
+        height: 100%;
+    }
+}
+
+.sidebar__header {
+    border-bottom: 1px solid var(--color-border-soft);
+}
+
+.sidebar .offcanvas-body,
+.sidebar__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: var(--space-md);
+}
+
+@media (min-width: 992px) {
+    .sidebar .offcanvas-body {
+        flex-grow: 1;
+        height: 100%;
+        padding: var(--space-md);
+        overflow-y: auto;
+    }
+}
+
+.sidebar__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-xs) var(--space-lg);
+    color: var(--color-text);
+}
+
+.sidebar__header .sidebar__brand {
+    padding: 0;
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.brand-mark svg {
+    width: 18px;
+    height: 18px;
+}
+
+.brand-mark__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.brand-name {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.brand-name__top {
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+}
+
+.brand-name__sub {
+    font-size: 9px;
+    font-weight: var(--font-semibold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+}
+
+.sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 2px;
+}
+
+.sidebar__group-label {
+    padding: var(--space-md) var(--space-sm) var(--space-2xs);
+    font-size: 9px;
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+}
+
+.sidebar__group-label:first-child {
+    padding-top: 0;
+}
+
+.sidebar__list {
+    gap: 2px;
+}
+
+.sidebar__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 40px;
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-muted);
+    transition: background-color var(--duration-fast) var(--ease-out),
+        color var(--duration-fast) var(--ease-out);
+}
+
+.sidebar__icon {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+}
+
+.sidebar__link:hover,
+.sidebar__link:focus-visible {
+    background: var(--color-surface-secondary);
+    color: var(--color-text);
+}
+
+.sidebar__link[aria-current="page"] {
+    background: var(--color-primary-soft);
+    color: var(--color-primary-strong);
+    font-weight: var(--font-semibold);
+}
+
+.sidebar__link[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--color-primary);
+}
+
+/* --- Rodapé da sidebar: o mini passaporte --- */
+.sidebar__footer {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border-soft);
+}
+
+.sidebar__footer:empty {
+    display: none;
+}
+
+.mini-passport {
+    display: block;
+    width: 100%;
+    padding: var(--space-sm);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    text-align: left;
+    transition: border-color var(--duration-fast) var(--ease-out),
+        background-color var(--duration-fast) var(--ease-out);
+}
+
+.mini-passport:hover {
+    border-color: var(--color-border-strong);
+    background: var(--color-surface-secondary);
+}
+
+.mini-passport__top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-xs);
+}
+
+.mini-passport__name {
+    min-width: 0;
+    flex: 1;
+}
+
+.mini-passport__nick {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mini-passport__archetype {
+    display: block;
+    font-size: 9px;
+    font-weight: var(--font-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-primary-strong);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mini-passport__xp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-text-faint);
+}
+
+/* ============================================================
+   MAIN COLUMN
+   ============================================================ */
+.main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--space-md);
+    height: var(--topbar-height);
+    padding: 0 var(--page-padding-x);
+    border-bottom: 1px solid var(--color-border-soft);
+    background: rgba(var(--rgb-ink), 0.94);
+}
+
+.topbar__heading {
+    min-width: 0;
+}
+
+.topbar__title {
+    font-size: var(--text-md);
+    font-weight: var(--font-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.topbar__subtitle {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.topbar__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-left: auto;
+}
+
+.topbar__xp {
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-2xs) var(--space-sm) var(--space-2xs) var(--space-2xs);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+}
+
+.topbar__xp-bar {
+    width: 96px;
+}
+
+.topbar__xp-text {
+    font-size: var(--text-2xs);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+
+.menu-toggle {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-secondary);
+}
+
+.menu-toggle:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text);
+}
+
+.menu-toggle svg {
+    width: 17px;
+    height: 17px;
+}
+
+/* ============================================================
+   PAGE CONTENT
+   ============================================================ */
+.page {
+    flex: 1;
+    width: 100%;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: var(--space-xl) var(--page-padding-x) var(--space-3xl);
+}
+
+.page--narrow {
+    max-width: var(--content-narrow);
+}
+
+.page > section + section,
+.page > section + div,
+.page > div + section {
+    margin-top: var(--space-xl);
+}
+
+.page__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+}
+
+.page__title {
+    font-size: var(--text-3xl);
+    font-weight: 400;
+    letter-spacing: var(--tracking-display);
+}
+
+.page__lede {
+    margin-top: var(--space-2xs);
+    max-width: 62ch;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.page__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+}
+
+/* ============================================================
+   GRIDS LEGADOS
+   As telas novas usam o grid do Bootstrap (row/col). Estes ficam
+   para componentes internos que não são layout de página.
+   ============================================================ */
+.grid {
+    display: grid;
+    gap: var(--space-md);
+}
+
+.grid--badges {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.grid--form-2 {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* ============================================================
+   BARRA INFERIOR (celular e tablet)
+   ============================================================ */
+.bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-sticky);
+    display: flex;
+    align-items: stretch;
+    height: calc(var(--bottomnav-height) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    border-top: 1px solid var(--color-border);
+    background: rgba(var(--rgb-ink), 0.97);
+}
+
+.bottom-nav__item {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    min-height: 44px;
+    color: var(--color-text-faint);
+    transition: color var(--duration-fast) var(--ease-out);
+}
+
+.bottom-nav__item svg {
+    width: 19px;
+    height: 19px;
+}
+
+.bottom-nav__item span {
+    font-size: 10px;
+    font-weight: var(--font-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+}
+
+.bottom-nav__item:hover {
+    color: var(--color-text-secondary);
+}
+
+.bottom-nav__item[aria-current="page"] {
+    color: var(--color-primary-strong);
+}
+
+.bottom-nav__item[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 28px;
+    height: 2px;
+    background: var(--color-primary);
+}
+
+/* ============================================================
+   CABEÇALHO PÚBLICO (navbar Bootstrap)
+   ============================================================ */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    min-height: var(--topbar-height);
+    padding: var(--space-xs) var(--space-xl);
+    border-bottom: 1px solid var(--color-border-soft);
+    background: rgba(var(--rgb-ink), 0.94);
+}
+
+.site-header__inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 0;
+}
+
+.site-header .sidebar__brand {
+    padding: 0;
+    margin-right: 0;
+}
+
+.site-header .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+}
+
+.site-header .nav-link[aria-current="page"] {
+    color: var(--color-primary-strong);
+}
+
+/* Landing: o cabeçalho só ganha fundo depois de rolar. */
+.site-header--landing:not(.is-stuck) {
+    border-bottom-color: transparent;
+    background: transparent;
+}
+
+/* ============================================================
+   RODAPÉ COM CRÉDITOS
+   ============================================================ */
+.site-footer {
+    padding: var(--space-2xl) var(--space-xl) var(--space-xl);
+    border-top: 1px solid var(--color-border-soft);
+    background: var(--color-background-elevated);
+}
+
+.site-footer__inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 0;
+}
+
+.site-footer__logo {
+    width: 132px;
+    height: auto;
+}
+
+.site-footer__tagline {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    letter-spacing: var(--tracking-display);
+    color: var(--color-primary-strong);
+}
+
+.site-footer__note {
+    margin-top: var(--space-2xs);
+    max-width: 40ch;
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+}
+
+.site-footer__heading {
+    margin-bottom: var(--space-xs);
+    font-size: var(--text-2xs);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.site-footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+}
+
+.site-footer__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    transition: color var(--duration-fast) var(--ease-out);
+}
+
+.site-footer__links a:hover {
+    color: var(--color-primary-strong);
+}
+
+.site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border-soft);
+}
+
+.site-footer__credits,
+.site-footer__legal {
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+}
+
+.site-footer__credits {
+    color: var(--color-text-muted);
+}
+
+.site-footer__credits a {
+    color: var(--color-primary-strong);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* A barra inferior é fixa: o rodapé ganha folga para não ficar atrás dela. */
+@media (max-width: 991.98px) {
+    .app ~ .site-footer,
+    .bottom-nav ~ .site-footer {
+        padding-bottom: calc(var(--bottomnav-height) + env(safe-area-inset-bottom, 0px) + var(--space-lg));
+    }
+}
+
+/* ============================================================
+   MAPA DO SITE: MOLDURA HÍBRIDA
+   <html data-auth="in|out"> decide qual navegação aparece.
+   ============================================================ */
+[data-auth="out"] .sidebar-shell,
+[data-auth="out"] .topbar,
+[data-auth="out"] .bottom-nav {
+    display: none !important;
+}
+
+[data-auth="out"] .app {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+[data-auth="in"] .public-header {
+    display: none !important;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1199.98px) {
+    :root {
+        --page-padding-x: var(--space-lg);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .page {
+        padding-bottom: calc(var(--bottomnav-height) + var(--space-xl));
+    }
+
+    [data-auth="out"] .page {
+        padding-bottom: var(--space-3xl);
+    }
+}
+
+@media (max-width: 767.98px) {
+    :root {
+        --page-padding-x: var(--space-md);
+    }
+
+    .page {
+        padding-top: var(--space-lg);
+    }
+
+    .page__header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-lg);
+    }
+
+    .page__title {
+        font-size: var(--text-2xl);
+    }
+
+    .grid--badges {
+        grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+        gap: var(--space-sm);
+    }
+
+    .site-header,
+    .site-footer {
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+    }
+
+    .topbar {
+        gap: var(--space-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .stat__value {
+        font-size: var(--text-xl);
+    }
+
+    .page__actions {
+        width: 100%;
+    }
+
+    .page__actions .btn {
+        flex: 1;
+    }
+}

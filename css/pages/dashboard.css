@@ -1,0 +1,564 @@
+/* ============================================================
+   PAGE — DASHBOARD
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   HUD — o nível do Passaporte em destaque
+   O número do nível é o elemento dominante da página (fonte pixel,
+   como num placar de jogo). A barra de XP é segmentada em 20 blocos
+   que acendem em sequência uma única vez, ao abrir a página.
+   ------------------------------------------------------------ */
+.hud {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: var(--space-2xl);
+    align-items: end;
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.hud__caption {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.hud__number {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(8.5rem, 17vw, 13.5rem);
+    line-height: 0.78;
+    color: var(--color-primary);
+    letter-spacing: -0.02em;
+}
+
+.hud__archetype {
+    margin: var(--space-sm) 0 0;
+    font-size: var(--text-md);
+    color: var(--color-text);
+}
+
+.hud__xp {
+    margin-top: var(--space-lg);
+}
+
+.hud__segments {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    gap: 3px;
+    height: 14px;
+}
+
+.hud__seg {
+    background: var(--color-surface-tertiary);
+}
+
+.hud__seg.is-on {
+    background: var(--color-primary);
+    animation: hud-seg var(--duration-fast) var(--ease-out) both;
+    animation-delay: calc(var(--i) * 35ms + 200ms);
+}
+
+@keyframes hud-seg {
+    from { background: var(--color-surface-tertiary); }
+    to { background: var(--color-primary); }
+}
+
+.hud__xp-text {
+    margin: var(--space-xs) 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.hud__title {
+    margin: 0;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-display);
+}
+
+.hud__sub {
+    margin: var(--space-2xs) 0 var(--space-lg);
+    color: var(--color-text-muted);
+}
+
+.ledger {
+    margin: 0;
+    border-top: 1px solid var(--color-border);
+}
+
+.ledger__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--space-md);
+    padding: var(--space-xs) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.ledger dt {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-weight: var(--font-medium);
+    color: var(--color-text-secondary);
+}
+
+.ledger dd {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    margin: 0;
+    text-align: right;
+}
+
+.ledger__value {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    line-height: 1;
+    color: var(--color-text);
+}
+
+.ledger__meta {
+    min-width: 9.5rem;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-align: left;
+}
+
+.hud__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+}
+
+@media (max-width: 991.98px) {
+    .hud {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .ledger__meta {
+        min-width: 0;
+    }
+
+    .ledger dd {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0;
+    }
+
+    .ledger__meta {
+        text-align: right;
+    }
+
+    .hud__actions .btn {
+        flex: 1 1 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hud__seg.is-on {
+        animation: none;
+    }
+}
+
+/* ------------------------------------------------------------
+   SETUP NUDGE
+   ------------------------------------------------------------ */
+.nudge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    padding: var(--space-md) var(--space-lg);
+    border: 1px solid rgba(var(--rgb-primary), 0.3);
+    border-radius: var(--radius-lg);
+    background:
+        radial-gradient(420px 160px at 6% 50%, rgba(var(--rgb-primary), 0.16), transparent 70%),
+        var(--color-surface);
+    animation: fade-up var(--duration-slow) var(--ease-out) 60ms both;
+}
+
+.nudge__icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--color-primary-ghost);
+    color: var(--color-primary-strong);
+}
+
+.nudge__body {
+    flex: 1;
+    min-width: 0;
+}
+
+.nudge__title {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+}
+
+.nudge__text {
+    margin-top: 2px;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.nudge__meter {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-xs);
+    max-width: 320px;
+}
+
+.nudge__meter .progress {
+    flex: 1;
+}
+
+.nudge__meter .numeric {
+    font-size: var(--text-2xs);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-strong);
+}
+
+/* ------------------------------------------------------------
+   SPLIT
+   ------------------------------------------------------------ */
+.dashboard__split {
+    margin-top: var(--space-xl);
+}
+
+/* ------------------------------------------------------------
+   PRÓXIMO PASSO
+   ------------------------------------------------------------ */
+.next-step {
+    border-color: var(--color-primary-line);
+}
+
+.next-step::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 56px;
+    height: 3px;
+    background: var(--color-primary);
+}
+
+.next-step__body {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.next-step__icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--color-primary-line);
+    background: var(--color-primary-soft);
+    color: var(--color-primary-strong);
+}
+
+.next-step__copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.next-step__title {
+    font-size: var(--text-lg);
+}
+
+.next-step__why {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    margin-top: var(--space-2xs);
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+}
+
+.next-step__cta {
+    flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------
+   ARENA E CLÃ
+   ------------------------------------------------------------ */
+.community-card__value {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    line-height: 1;
+}
+
+.community-card__clan {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.community-card__clan-name {
+    font-weight: var(--font-semibold);
+}
+
+.community-card--empty {
+    border-style: dashed;
+}
+
+/* ------------------------------------------------------------
+   GAME ROWS
+   ------------------------------------------------------------ */
+.game-row-list,
+.squad-row-list,
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-xs);
+}
+
+.game-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-md);
+    transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.game-row:hover {
+    background: var(--color-surface-secondary);
+}
+
+.game-row__cover {
+    display: block;
+    width: 34px;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.game-row__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.game-row__title {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.game-row__meta {
+    /* The platform glyph is an SVG (display:block via the reset), so the
+       row has to be a flex line or the icon breaks onto its own row. */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: var(--text-2xs);
+    color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+   SUGGESTED SQUAD
+   ------------------------------------------------------------ */
+.suggested__intro {
+    margin-bottom: var(--space-sm);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.squad-row-list {
+    padding: 0;
+    gap: var(--space-2xs);
+    margin-bottom: var(--space-sm);
+}
+
+.squad-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border-soft);
+    border-left: 3px solid var(--tier-color, var(--color-border));
+    border-radius: var(--radius-md);
+    background: var(--color-surface-inset);
+    transition: border-color var(--duration-fast) var(--ease-out),
+        transform var(--duration-fast) var(--ease-out);
+}
+
+.squad-row:hover {
+    transform: translateX(2px);
+    border-color: var(--color-border-strong);
+    border-left-color: var(--tier-color, var(--color-border));
+}
+
+.squad-row__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.squad-row__nick {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+}
+
+.squad-row__meta {
+    font-size: var(--text-2xs);
+    color: var(--color-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.squad-row__score {
+    font-size: var(--text-md);
+    font-weight: var(--font-bold);
+    color: var(--tier-color, var(--color-text));
+}
+
+/* ------------------------------------------------------------
+   ACTIVITY
+   ------------------------------------------------------------ */
+.activity-list {
+    gap: 0;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-md);
+    transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.activity-item:hover {
+    background: var(--color-surface-secondary);
+}
+
+.activity-item__icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-tertiary);
+    color: var(--color-text-muted);
+}
+
+.activity-item__icon--achievement { background: var(--color-secondary-soft); color: var(--color-secondary); }
+.activity-item__icon--level       { background: var(--color-secondary-soft); color: var(--color-secondary); }
+.activity-item__icon--dna         { background: var(--color-primary-soft);   color: var(--color-primary-strong); }
+.activity-item__icon--squad       { background: var(--color-accent-soft);    color: var(--color-accent); }
+.activity-item__icon--library     { background: rgba(255, 158, 31, 0.13);    color: var(--color-dna-collector); }
+
+.activity-item__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.activity-item__text {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.activity-item__time {
+    font-size: var(--text-2xs);
+    color: var(--color-text-faint);
+}
+
+.activity-item__xp {
+    font-size: var(--text-2xs);
+    font-weight: var(--font-bold);
+    color: var(--color-secondary);
+}
+
+/* ------------------------------------------------------------
+   DNA SUMMARY
+   ------------------------------------------------------------ */
+.dna-summary__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.dna-summary__archetype {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-tight);
+}
+
+.dna-summary__tagline {
+    margin-top: 2px;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.dna-summary__glyph {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-inset);
+}
+
+.dna-summary__link {
+    display: inline-block;
+    margin-top: var(--space-lg);
+    font-size: var(--text-sm);
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------ */
+@media (max-width: 860px) {
+    .nudge {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+
+    .nudge .btn {
+        width: 100%;
+    }
+
+    .dashboard__split {
+        margin-top: var(--space-lg);
+    }
+
+    .next-step__body {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .next-step__cta,
+    .next-step__cta .btn {
+        width: 100%;
+    }
+}

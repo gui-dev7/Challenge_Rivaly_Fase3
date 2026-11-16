@@ -1,0 +1,159 @@
+/* ============================================================
+   RIVALY — RESET (sobre o Reboot do Bootstrap)
+
+   O Reboot do Bootstrap já cuida de box-sizing, margem do body,
+   herança de fonte nos campos, cursor de botão, colapso de tabela,
+   fieldset sem borda e [hidden]. Nada disso é repetido aqui.
+
+   O que sobra são as divergências deliberadas: o Reboot dá margem
+   inferior a títulos, parágrafos e listas, e recuo às listas. A
+   RIVALY controla todo espaçamento pelo layout (gap, stack, grid),
+   então essas margens são zeradas. Seletores de elemento carregados
+   depois do Bootstrap vencem os dele com a mesma especificidade.
+   ============================================================ */
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, dl, dd, figure, blockquote, pre {
+    margin: 0;
+}
+
+ul,
+ol {
+    padding: 0;
+    list-style: none;
+}
+
+/* O Reboot transforma legend num título flutuante; aqui ela volta a ser
+   um rótulo comum de grupo de campos. */
+legend {
+    float: none;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-tight);
+    overflow-wrap: break-word;
+}
+
+p {
+    overflow-wrap: break-word;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+svg {
+    flex-shrink: 0;
+}
+
+/* Campos sem a moldura do navegador: cada componente desenha a sua. */
+input,
+button,
+textarea,
+select {
+    color: inherit;
+    background: none;
+    border: none;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Sem as setas nativas do campo numérico. */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
+/* O preenchimento automático não pode pintar a superfície de branco. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-text);
+    -webkit-box-shadow: 0 0 0 1000px var(--color-surface-secondary) inset;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+/* ------------------------------------------------------------
+   MOVIMENTO REDUZIDO
+   Respeitado globalmente, mais a escolha manual das Configurações
+   gravada em <html data-motion="reduced">.
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html:not([data-motion="reduced"]) {
+        scroll-behavior: smooth;
+    }
+}
+
+html[data-motion="reduced"] {
+    scroll-behavior: auto !important;
+}
+
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+}

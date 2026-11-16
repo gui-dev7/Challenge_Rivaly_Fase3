@@ -1,0 +1,27 @@
+node_modules/
+dist/
+.vercel/
+.claude/
+.env
+.env.*
+!.env.example
+*.log
+npm-debug.log*
+/oqueadicionar.md
+.DS_Store
+Thumbs.db
+
+# Editores e arquivos temporarios locais
+.vscode/
+.idea/
+*.tmp
+*.swp
+.cache/
+coverage/
+Desktop.ini
+
+# Entrega: arquivos gerados e foto pessoal (fora do repositório público)
+entrega/dist/
+entrega/_render.html
+entrega/foto.jpg
+entrega/foto.png

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<!--
+  Slides da entrega (10 páginas, 1920 × 1080).
+  Não edite o link do vídeo aqui: ele vem de entrega/link-do-video.txt.
+  Gere o PDF com:  npm run entrega
+-->
+<html lang="pt-BR" data-video-url="" data-repo-url="https://github.com/gui-dev7/Challenge_Rivaly_Fase3" data-site-url="https://rivaly-social.vercel.app">
+<head>
+<meta charset="UTF-8">
+<title>RIVALY · Cibersegurança e IA</title>
+<style>
+@font-face { font-family: 'Jersey 10'; src: url('../assets/fonts/Jersey10-Regular.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F; }
+@font-face { font-family: 'Jersey 10'; src: url('../assets/fonts/Jersey10-LatinExt.woff2') format('woff2'); unicode-range: U+0100-024F, U+1E00-1EFF; }
+@font-face { font-family: 'Chakra Petch'; font-weight: 400; src: url('../assets/fonts/ChakraPetch-400.woff2') format('woff2'); }
+@font-face { font-family: 'Chakra Petch'; font-weight: 500; src: url('../assets/fonts/ChakraPetch-500.woff2') format('woff2'); }
+@font-face { font-family: 'Chakra Petch'; font-weight: 600; src: url('../assets/fonts/ChakraPetch-600.woff2') format('woff2'); }
+@font-face { font-family: 'Chakra Petch'; font-weight: 700; src: url('../assets/fonts/ChakraPetch-700.woff2') format('woff2'); }
+
+:root {
+    --ink: #050505;
+    --surface: #111111;
+    --surface-2: #181818;
+    --line: #262626;
+    --line-strong: #3a3a3a;
+    --bone: #f5f5f2;
+    --muted: #a3a39d;
+    --faint: #777777;
+    --yellow: #ffd400;
+    --yellow-soft: rgba(255, 212, 0, 0.12);
+    --green: #3ddc84;
+    --green-soft: rgba(61, 220, 132, 0.12);
+    --orange: #ff9e1f;
+    --orange-soft: rgba(255, 158, 31, 0.12);
+    --red: #ff4d3d;
+    --red-soft: rgba(255, 77, 61, 0.12);
+    --display: 'Jersey 10', 'Courier New', monospace;
+    --sans: 'Chakra Petch', 'Segoe UI', sans-serif;
+    --mono: 'Cascadia Mono', Consolas, monospace;
+}
+
+@page { size: 1920px 1080px; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #000; }
+body { font-family: var(--sans); color: var(--bone); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+.slide {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    padding: 84px 112px 96px;
+    overflow: hidden;
+    background:
+        radial-gradient(900px 600px at 92% -10%, rgba(255, 212, 0, 0.10), transparent 60%),
+        var(--ink);
+    page-break-after: always;
+    break-after: page;
+    display: flex;
+    flex-direction: column;
+}
+.slide:last-child { page-break-after: auto; break-after: auto; }
+@media screen { .slide { margin: 0 auto 24px; } }
+
+/* moldura comum */
+.slide::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 12px;
+    background: var(--yellow);
+}
+.foot {
+    position: absolute;
+    left: 112px; right: 112px; bottom: 36px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 20px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint);
+}
+.foot b { color: var(--yellow); font-weight: 600; }
+
+.kicker {
+    font-size: 24px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--yellow);
+}
+h1, h2 { font-family: var(--display); font-weight: 400; line-height: 0.95; letter-spacing: 0.01em; }
+h2 { font-size: 96px; margin-top: 14px; }
+.lead { margin-top: 22px; font-size: 34px; line-height: 1.35; color: var(--muted); max-width: 1500px; }
+.lead strong { color: var(--bone); font-weight: 600; }
+.body { margin-top: 48px; flex: 1; min-height: 0; }
+
+.tag {
+    display: inline-block; padding: 4px 12px; border: 2px solid currentColor;
+    font-size: 18px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
+}
+.tag--ok { color: var(--green); background: var(--green-soft); }
+.tag--plan { color: var(--orange); background: var(--orange-soft); }
+.tag--bad { color: var(--red); background: var(--red-soft); }
+.tag--y { color: var(--yellow); background: var(--yellow-soft); }
+
+.card { background: var(--surface); border: 2px solid var(--line); padding: 32px 34px; }
+.card h3 { font-size: 34px; font-weight: 700; line-height: 1.15; }
+.card p, .card li { font-size: 26px; line-height: 1.4; color: var(--muted); }
+.card ul { list-style: none; display: grid; gap: 14px; margin-top: 18px; }
+.card li { display: flex; gap: 14px; align-items: baseline; }
+.card li::before { content: '▸'; color: var(--yellow); flex: none; }
+.card li strong { color: var(--bone); font-weight: 600; }
+
+code { font-family: var(--mono); font-size: 0.86em; color: var(--yellow); white-space: nowrap; }
+
+/* ---------- 1. Capa ---------- */
+.cover { display: grid; grid-template-columns: 1fr 540px; gap: 96px; align-items: center; flex: 1; }
+.cover__logo { width: 168px; height: 168px; object-fit: cover; margin-bottom: 40px; border: 2px solid var(--line); }
+.cover h1 { font-size: 132px; margin-top: 22px; }
+.cover h1 span { display: inline-block; background: var(--yellow); color: var(--ink); padding: 0 18px 6px; margin-top: 10px; }
+.cover .lead { font-size: 32px; max-width: 1000px; }
+.person { background: var(--surface); border: 2px solid var(--line); border-top: 8px solid var(--yellow); padding: 40px; }
+.person__photo { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: var(--surface-2); }
+.person__placeholder {
+    width: 100%; aspect-ratio: 1; display: grid; place-items: center; text-align: center;
+    border: 3px dashed var(--line-strong); color: var(--faint); font-size: 26px; line-height: 1.4; padding: 40px;
+}
+.person__name { margin-top: 28px; font-size: 40px; font-weight: 700; line-height: 1.1; }
+.person__rm { margin-top: 10px; font-family: var(--display); font-size: 64px; color: var(--yellow); line-height: 1; }
+.person__meta { margin-top: 12px; font-size: 24px; color: var(--muted); }
+.links { display: flex; gap: 44px; align-items: center; margin-top: 56px; }
+.links__qr { width: 150px; height: 150px; background: #fff; padding: 10px; flex: none; display: grid; place-items: center; }
+.links__qr img { width: 100%; height: 100%; image-rendering: pixelated; }
+.links__qr:empty { display: none; }
+.links dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 24px; font-size: 24px; }
+.links dt { color: var(--faint); text-transform: uppercase; letter-spacing: 0.08em; font-size: 20px; padding-top: 4px; }
+.links dd { color: var(--bone); font-family: var(--mono); font-size: 24px; }
+.links dd.missing { color: var(--orange); font-family: var(--sans); }
+
+/* ---------- 2. Escopo ---------- */
+.cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; height: 100%; }
+.scope .card { border-top: 6px solid var(--line-strong); }
+.scope .card:nth-child(1) { border-top-color: var(--green); }
+.scope .card:nth-child(2) { border-top-color: var(--orange); }
+.scope .card:nth-child(3) { border-top-color: var(--faint); }
+.scope .card .tag { margin-bottom: 18px; }
+
+/* ---------- 3. Dor ---------- */
+.pain { display: grid; grid-template-columns: 760px 1fr; gap: 72px; }
+.quote {
+    font-family: var(--display); font-size: 88px; line-height: 1; color: var(--bone);
+    border-left: 8px solid var(--yellow); padding-left: 40px;
+}
+.quote em { font-style: normal; color: var(--yellow); }
+.threats { display: grid; gap: 22px; }
+.threat { display: grid; grid-template-columns: 72px 1fr; gap: 24px; align-items: start; background: var(--surface); border: 2px solid var(--line); padding: 24px 28px; }
+.threat svg { width: 56px; height: 56px; color: var(--yellow); }
+.threat h3 { font-size: 32px; font-weight: 700; }
+.threat p { font-size: 25px; line-height: 1.35; color: var(--muted); margin-top: 6px; }
+.before-bar {
+    margin-top: 40px; padding: 24px 32px; border: 2px solid rgba(255, 77, 61, 0.5); background: var(--red-soft);
+    font-size: 28px; line-height: 1.4;
+}
+.before-bar strong { color: var(--red); }
+
+/* ---------- 4. Aplicação ---------- */
+.chain { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 8px; }
+.chain span { padding: 12px 20px; background: var(--surface-2); border: 2px solid var(--line); font-size: 26px; font-weight: 600; }
+.chain i { font-style: normal; color: var(--yellow); font-size: 30px; }
+.chain span.hl { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+.features .card { padding: 26px 30px; }
+.features .card h3 { font-size: 32px; }
+.features .card p { margin-top: 8px; font-size: 24px; }
+.stack { margin-top: 32px; font-size: 26px; color: var(--muted); }
+.stack strong { color: var(--bone); }
+
+/* ---------- 5. Diagnóstico ---------- */
+.diag { display: grid; grid-template-columns: 520px 1fr; gap: 48px; }
+.diag .card ul { gap: 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 25px; }
+th { text-align: left; font-size: 19px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); font-weight: 600; padding: 0 18px 14px; border-bottom: 2px solid var(--line-strong); }
+td { padding: 16px 18px; border-bottom: 2px solid var(--line); line-height: 1.3; vertical-align: top; }
+td.before { color: var(--muted); }
+td.before::before { content: '✕ '; color: var(--red); font-weight: 700; }
+td.after { color: var(--bone); }
+td.after::before { content: '✓ '; color: var(--green); font-weight: 700; }
+td.after.plan::before { content: '→ '; color: var(--orange); }
+
+/* ---------- 6. Plano ---------- */
+.layers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; height: 520px; }
+.layer { background: var(--surface); border: 2px solid var(--line); border-top: 6px solid var(--yellow); padding: 26px 24px; display: flex; flex-direction: column; gap: 18px; }
+.layer h3 { font-size: 30px; font-weight: 700; line-height: 1.1; }
+.layer__item { font-size: 24px; line-height: 1.32; color: var(--muted); padding-left: 16px; border-left: 4px solid var(--line-strong); }
+.layer__item.ok { border-left-color: var(--green); color: var(--bone); }
+.layer__item.plan { border-left-color: var(--orange); }
+.legend { display: flex; gap: 36px; margin-top: 22px; font-size: 22px; color: var(--muted); align-items: center; }
+.legend span { display: inline-flex; gap: 12px; align-items: center; }
+.legend i { width: 28px; height: 6px; display: inline-block; }
+
+/* ---------- 7. IA ---------- */
+.ai { display: grid; gap: 16px; }
+.ai__row { display: grid; grid-template-columns: 64px 470px 1fr 520px; gap: 28px; align-items: center; background: var(--surface); border: 2px solid var(--line); padding: 20px 28px; }
+.ai__n { font-family: var(--display); font-size: 64px; color: var(--yellow); line-height: 1; }
+.ai__what { font-size: 30px; font-weight: 700; line-height: 1.15; }
+.ai__where { font-size: 23px; line-height: 1.35; color: var(--muted); }
+.ai__guard { font-size: 23px; line-height: 1.35; color: var(--bone); border-left: 4px solid var(--green); padding-left: 18px; }
+.ai__head { display: grid; grid-template-columns: 64px 470px 1fr 520px; gap: 28px; padding: 0 30px; font-size: 19px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+.rule { margin-top: 22px; font-size: 30px; font-weight: 600; }
+.rule b { color: var(--yellow); }
+
+/* ---------- 8. Regras ---------- */
+.rules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.rules .card { padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 12px; }
+.rules .num { font-family: var(--display); font-size: 56px; color: var(--yellow); line-height: 0.8; }
+.rules h3 { font-size: 28px; }
+.rules p { font-size: 22px; line-height: 1.35; }
+.rules .tag { align-self: flex-start; margin-top: auto; }
+.base { margin-top: 26px; font-size: 22px; color: var(--muted); }
+.base strong { color: var(--bone); }
+
+/* ---------- 9. Como ---------- */
+.how { display: grid; grid-template-columns: 1fr 120px 1fr; gap: 0; align-items: stretch; }
+.box { background: var(--surface); border: 2px solid var(--line); padding: 30px 32px; }
+.box h3 { font-size: 34px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.box ul { list-style: none; display: grid; gap: 16px; margin-top: 22px; }
+.box li { font-size: 24px; line-height: 1.35; color: var(--muted); }
+.box li strong { color: var(--bone); }
+.arrow { display: grid; place-items: center; align-content: center; gap: 12px; color: var(--yellow); text-align: center; font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; }
+.arrow svg { width: 96px; height: 40px; }
+.how-bottom { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 22px; margin-top: 28px; }
+.how-bottom .card { padding: 24px 28px; }
+.how-bottom .card h3 { font-size: 26px; display: flex; gap: 14px; align-items: center; justify-content: space-between; }
+.how-bottom .card p { font-size: 22px; margin-top: 10px; }
+.shared { margin-top: 18px; padding: 16px 22px; background: var(--yellow-soft); border: 2px solid rgba(255, 212, 0, 0.4); font-size: 24px; text-align: center; }
+.shared strong { color: var(--yellow); }
+#s9 .body { margin-top: 30px; }
+#s9 .box { padding: 24px 30px; }
+#s9 .box ul { gap: 10px; margin-top: 14px; }
+#s9 .how-bottom { margin-top: 20px; }
+#s9 .how-bottom .card { padding: 18px 26px; }
+#s9 .how-bottom .card p { font-size: 21px; margin-top: 6px; }
+.stored { margin-top: 18px; display: grid; grid-template-columns: 330px 1fr; gap: 12px 28px; align-items: center; }
+.stored::before { content: 'A mesma senha, "pizza de quinta com o squad", guardada:'; grid-column: 1 / -1; font-size: 22px; color: var(--muted); }
+.stored dt { font-size: 20px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+.stored dd { font-family: var(--mono); font-size: 23px; padding: 12px 18px; background: #000; border: 2px solid var(--line); border-left: 6px solid var(--green); color: var(--bone); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stored dd.old { border-left-color: var(--red); color: var(--muted); }
+
+/* ---------- 10. Demo ---------- */
+.demo { display: grid; grid-template-columns: 760px 1fr 380px; gap: 40px; }
+/* Recorte da captura 2200 × 1800: do campo de senha até a caixa do HIBP. */
+.shot { position: relative; width: 760px; height: 500px; overflow: hidden; border: 2px solid var(--line-strong); background: #111; }
+.shot img { display: block; width: 1100px; max-width: none; margin: -224px 0 0 -162px; }
+.shot figcaption { position: absolute; right: 0; top: 0; background: var(--yellow); color: var(--ink); font-size: 18px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 14px; }
+.shot-note { margin-top: 18px; font-size: 22px; line-height: 1.4; color: var(--muted); }
+.shot-note strong { color: var(--bone); }
+.facts { display: grid; gap: 16px; align-content: start; }
+.fact { display: grid; grid-template-columns: 92px 1fr; gap: 18px; align-items: center; background: var(--surface); border: 2px solid var(--line); padding: 16px 22px; }
+.fact b { font-family: var(--display); font-weight: 400; font-size: 64px; line-height: 0.9; color: var(--yellow); }
+.fact span { font-size: 22px; line-height: 1.3; color: var(--muted); }
+.fact span strong { color: var(--bone); }
+.refs { font-size: 21px; line-height: 1.45; color: var(--muted); list-style: none; display: grid; gap: 6px; margin-top: 8px; }
+.refs strong { color: var(--bone); }
+.final { display: flex; flex-direction: column; gap: 22px; }
+.final .links__qr { width: 250px; height: 250px; }
+.final dl { display: grid; gap: 6px; font-size: 22px; }
+.final dt { color: var(--faint); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px; }
+.final dd { font-family: var(--mono); font-size: 21px; overflow-wrap: anywhere; color: var(--bone); }
+.final dd.missing { color: var(--orange); font-family: var(--sans); word-break: normal; }
+.thanks { font-family: var(--display); font-size: 80px; line-height: 0.9; color: var(--yellow); }
+</style>
+</head>
+<body>
+
+<!-- ======================= 1. CAPA + INTEGRANTE ======================= -->
+<section class="slide" id="s1">
+    <div class="cover">
+        <div>
+            <img class="cover__logo" src="../RivalBRAND/rivaly-logo-primary-symbol-yellow-dark.png" alt="Logo RIVALY">
+            <p class="kicker">FIAP · Sistemas de Informação · Enterprise Challenge · Palo Alto Networks</p>
+            <h1>RIVALY:<br><span>Cibersegurança e IA</span></h1>
+            <p class="lead">Como proteger a identidade gamer: plano de segurança, usos de IA no produto e o <strong>padrão de senha</strong>, com demonstração funcionando.</p>
+            <div class="links">
+                <div class="links__qr" data-qr></div>
+                <dl>
+                    <dt>Vídeo</dt><dd data-video></dd>
+                    <dt>Código</dt><dd data-repo></dd>
+                    <dt>Site</dt><dd data-site></dd>
+                </dl>
+            </div>
+        </div>
+        <aside class="person">
+            <img class="person__photo" src="foto.jpg" alt="Foto de Guilherme Oliveira Santos"
+                 onerror="this.outerHTML='<div class=&quot;person__placeholder&quot;>Coloque a sua foto em<br><b>entrega/foto.jpg</b><br>e rode npm run entrega</div>'">
+            <p class="person__name">Guilherme Oliveira Santos</p>
+            <p class="person__rm">RM576218</p>
+            <p class="person__meta">Sistemas de Informação · 1º ano · projeto individual</p>
+        </aside>
+    </div>
+    <div class="foot"><span><b>RIVALY</b> · Find allies. Meet rivals.</span><span>01 / 10</span></div>
+</section>
+
+<!-- ======================= 2. TEMA E ESCOPO ======================= -->
+<section class="slide" id="s2">
+    <p class="kicker">Tema e escopo</p>
+    <h2>Proteger a identidade gamer</h2>
+    <p class="lead">A conta, os dados e a comunidade da RIVALY. O foco desta entrega é a <strong>porta de entrada</strong>: a senha, o login e o que acontece quando alguém tenta adivinhar.</p>
+    <div class="body scope">
+        <div class="cols-3">
+            <div class="card">
+                <span class="tag tag--ok">Feito e testado</span>
+                <h3>Nesta entrega</h3>
+                <ul>
+                    <li><span><strong>Padrão de senha</strong> no navegador e no servidor, com o mesmo código</span></li>
+                    <li><span>Hash <strong>argon2id</strong> e PBKDF2 com sal por conta</span></li>
+                    <li><span><strong>Bloqueio</strong> por tentativas e mensagem genérica</span></li>
+                    <li><span>Laboratório <code>/seguranca.html</code> e <strong>44 testes</strong> novos</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="tag tag--plan">Proposta com plano</span>
+                <h3>Próximo passo</h3>
+                <ul>
+                    <li><span>MFA opcional, recuperação de conta e passkeys</span></li>
+                    <li><span>IA: login de risco, moderação, antifraude da Arena e anti-phishing</span></li>
+                    <li><span>Regras de jogo validadas no servidor</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="tag" style="color: var(--faint)">Fora do escopo agora</span>
+                <h3>Depende do backend</h3>
+                <ul>
+                    <li><span>Banco de dados de produção</span></li>
+                    <li><span>Login com Google e Microsoft (OAuth)</span></li>
+                    <li><span>Chat e multiplayer em tempo real</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="foot"><span><b>RIVALY</b> · Cibersegurança e IA</span><span>02 / 10</span></div>
+</section>
+
+<!-- ======================= 3. A DOR ======================= -->
+<section class="slide" id="s3">
+    <p class="kicker">Inspiração: a dor</p>
+    <h2>Conta gamer vale dinheiro</h2>
+    <div class="body pain">
+        <div>
+            <p class="quote">Quem rouba a conta rouba a <em>identidade inteira</em>: Passaporte, clã, rating e reputação.</p>
+            <p class="before-bar"><strong>E na RIVALY V3.0:</strong> senha de 6 caracteres, hash com sal fixo, mensagem que revelava quem tem conta e tentativas ilimitadas.</p>
+        </div>
+        <div class="threats">
+            <div class="threat">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="3.5"/><path d="m10 13 9-9M16 7l2 2M14 9l2 2"/></svg>
+                <div><h3>Credential stuffing</h3><p>Robôs testam senhas vazadas de outros sites. Quem repete senha perde a conta.</p></div>
+            </div>
+            <div class="threat">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/><path d="M15 17l5 5"/></svg>
+                <div><h3>Phishing de "skin grátis"</h3><p>Páginas falsas de login da Steam e do Discord espalhadas em comunidades.</p></div>
+            </div>
+            <div class="threat">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+                <div><h3>Boosting e smurf</h3><p>Conta comprada ou compartilhada para subir de rank. O ranking deixa de valer.</p></div>
+            </div>
+            <div class="threat">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 9l6 4M15 9l-6 4"/></svg>
+                <div><h3>Toxicidade</h3><p>Assédio em comunidades competitivas expulsa jogadores, principalmente os novos.</p></div>
+            </div>
+        </div>
+    </div>
+    <div class="foot"><span><b>RIVALY</b> · Cibersegurança e IA</span><span>03 / 10</span></div>
+</section>
+
+<!-- ======================= 4. A APLICAÇÃO ======================= -->
+<section class="slide" id="s4">
+    <p class="kicker">A aplicação web</p>
+    <h2>RIVALY: Rival + Ally</h2>
+    <p class="lead">Plataforma de <strong>identidade gamer</strong>: um Passaporte que reúne quem você é como jogador e usa isso para achar aliados e rivais.</p>
+    <div class="body">
+        <div class="chain">
+            <span>Biblioteca</span><i>→</i><span>DNA Gamer</span><i>→</i><span>Compatibilidade</span><i>→</i><span>Squads</span><i>→</i><span>Arena e Clãs</span><i>→</i><span>Feed</span><i>→</i><span class="hl">Passaporte</span>
+        </div>
+        <div class="features">
+            <div class="card"><h3>Passaporte Gamer</h3><p>Plataformas, jogos, horários, funções, nível, reputação e medalhas.</p></div>
+            <div class="card"><h3>DNA Gamer</h3><p>Dez perguntas viram seis atributos e um arquétipo.</p></div>
+            <div class="card"><h3>Squads</h3><p>Compatibilidade em 7 fatores ponderados, com a conta à mostra.</p></div>
+            <div class="card"><h3>Arena</h3><p>Duelos e Clã vs Clã com rating no estilo Elo e temporada semanal.</p></div>
+            <div class="card"><h3>Clãs</h3><p>Líder, oficiais e membros, emblema próprio e meta semanal.</p></div>
+            <div class="card"><h3>Feed</h3><p>Posts, reações (GG, Respeito, Rivalidade) e comentários.</p></div>
+        </div>
+        <p class="stack"><strong>Stack:</strong> HTML5 · CSS3 · JavaScript (ES Modules) · Bootstrap 5.3 · Vite · Vercel · Node.js (servidor da demo)</p>
+    </div>
+    <div class="foot"><span><b>RIVALY</b> · rivaly-social.vercel.app</span><span>04 / 10</span></div>
+</section>
+
+<!-- ======================= 5. DIAGNÓSTICO ======================= -->
+<section class="slide" id="s5">
+    <p class="kicker">Diagnóstico do código</p>
+    <h2>O que a análise mostrou</h2>
+    <div class="body diag">
+        <div class="card">
+            <span class="tag tag--ok">Já protegia</span>
+            <ul>
+                <li><span><strong>CSP</strong> restritiva e cabeçalhos de segurança</span></li>
+                <li><span>Bloqueio de <strong>open redirect</strong> no <code>?redirect=</code></span></li>
+                <li><span><strong>escapeHtml</strong> e <code>noHtml</code> contra XSS no Feed e nos Clãs</span></li>
+                <li><span>Bootstrap e fontes <strong>locais</strong>, sem CDN de terceiros</span></li>
+                <li><span>Exportação de dados <strong>sem credenciais</strong></span></li>
+            </ul>
+        </div>
+        <table>
+            <thead><tr><th>Antes (V3.0)</th><th>Depois (V3.1)</th></tr></thead>
+            <tbody>
+                <tr><td class="before">Senha mínima de 6 caracteres</td><td class="after">15+, lista de bloqueio, dados pessoais e vazamentos</td></tr>
+                <tr><td class="before">SHA-256 com sal fixo: mesma senha, mesmo hash</td><td class="after">argon2id (servidor) e PBKDF2 600 mil (navegador), sal por conta</td></tr>
+                <tr><td class="before">"Não há conta com este e-mail"</td><td class="after">"E-mail ou senha incorretos.", com o mesmo tempo de resposta</td></tr>
+                <tr><td class="before">Tentativas ilimitadas</td><td class="after">Pausa de 30 s no 5º erro, dobrando até 15 min, por e-mail e IP</td></tr>
+                <tr><td class="before">2 vulnerabilidades altas (<code>npm audit</code>)</td><td class="after">Vite atualizado: 0 vulnerabilidades</td></tr>
+                <tr><td class="before">Sem HSTS</td><td class="after">HTTPS obrigatório por 2 anos</td></tr>
+                <tr><td class="before">Rating e clã editáveis no navegador</td><td class="after plan">Regras de jogo no servidor (proposta)</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="foot"><span><b>RIVALY</b> · Cibersegurança e IA</span><span>05 / 10</span></div>
+</section>
+
+<!-- ======================= 6. PLANO ======================= -->
+<section class="slide" id="s6">
+    <p class="kicker">Plano de cibersegurança</p>
+    <h2>Cinco camadas, uma regra</h2>
+    <p class="lead"><strong>Zero Trust:</strong> nunca confiar no cliente, verificar cada pedido no servidor e dar o menor privilégio possível.</p>
+    <div class="body">
+        <div class="layers">
+            <div class="layer">
+                <h3>Identidade</h3>
+                <p class="layer__item ok">Padrão de senha, argon2id, bloqueio, mensagem genérica</p>
+                <p class="layer__item ok">Sessão em cookie HttpOnly e SameSite</p>
+                <p class="layer__item plan">MFA, recuperação, passkeys, OAuth com PKCE</p>
+            </div>
+            <div class="layer">
+                <h3>Aplicação</h3>
+                <p class="layer__item ok">CSP, HSTS, anti-XSS, redirect seguro</p>
+                <p class="layer__item ok">API só JSON (fecha CSRF), limite de 8 KB</p>
+                <p class="layer__item plan">Rating e XP calculados no servidor; OWASP ZAP no CI</p>
+            </div>
+            <div class="layer">
+                <h3>Dados (LGPD)</h3>
+                <p class="layer__item ok">Só apelido, e-mail e senha; exportação sem credenciais</p>
+                <p class="layer__item plan">Criptografia em repouso e retenção de logs por 90 dias</p>
+                <p class="layer__item plan">Comunicação de incidente (art. 48)</p>
+            </div>
+            <div class="layer">
+                <h3>Dependências</h3>
+                <p class="layer__item ok"><code>npm audit</code> zerado e lockfile versionado</p>
+                <p class="layer__item ok">Bootstrap e fontes sem CDN</p>
+                <p class="layer__item plan">Dependabot e auditoria bloqueando o deploy</p>
+            </div>
+            <div class="layer">
+                <h3>Monitoramento</h3>
+                <p class="layer__item ok">Log de login sem senha nem token</p>
+                <p class="layer__item plan">Alerta de pico de falhas por IP</p>
+                <p class="layer__item plan">Aviso de novo aparelho com "não fui eu"</p>
+            </div>
+        </div>
+        <div class="legend"><span><i style="background: var(--green)"></i>Implementado</span><span><i style="background: var(--orange)"></i>Proposta</span><span>Ameaças mapeadas com STRIDE em <code>docs/seguranca-e-ia.md</code></span></div>
+    </div>
+    <div class="foot"><span><b>RIVALY</b> · Cibersegurança e IA</span><span>06 / 10</span></div>
+</section>
+
+<!-- ======================= 7. IA ======================= -->
+<section class="slide" id="s7">
+    <p class="kicker">Inteligência artificial</p>
+    <h2>IA onde ela resolve um problema real</h2>
+    <div class="body">
+        <div class="ai">
+            <div class="ai__head"><span></span><span>Uso</span><span>Onde entra no RIVALY</span><span>Guarda-corpo</span></div>
+            <div class="ai__row"><span class="ai__n">1</span><span class="ai__what">Login de risco</span><span class="ai__where">Antes do login no servidor: aparelho novo, país, horário, ritmo de tentativas</span><span class="ai__guard">Risco médio pede MFA; alto bloqueia e avisa o dono</span></div>
+            <div class="ai__row"><span class="ai__n">2</span><span class="ai__what">Moderação de toxicidade</span><span class="ai__where">Feed e comentários (<code>feed-store.js</code>), antes de publicar</span><span class="ai__guard">Primeiro sugere reescrever; ocultar só com revisão humana</span></div>
+            <div class="ai__row"><span class="ai__n">3</span><span class="ai__what">Antifraude da Arena</span><span class="ai__where">Histórico de partidas (<code>arena-store.js</code>): smurf e boosting</span><span class="ai__guard">Marca para revisão e congela o rating; nunca bane sozinho</span></div>
+            <div class="ai__row"><span class="ai__n">4</span><span class="ai__what">Anti-phishing de links</span><span class="ai__where">Posts com URL: domínio parecido com Steam ou Discord, "skin grátis"</span><span class="ai__guard">Avisa antes de abrir e bloqueia os maliciosos conhecidos</span></div>
+            <div class="ai__row"><span class="ai__n">5</span><span class="ai__what">Explicar os matches</span><span class="ai__where">Os 7 fatores que <code>compatibility.js</code> já calcula</span><span class="ai__guard">Só explica a conta; recebe números, sem nome nem e-mail</span></div>
+        </div>
+        <p class="rule"><b>A IA sugere, a pessoa decide.</b> Chamadas só pelo servidor, com o mínimo de dados (LGPD) e revisão dos falsos positivos.</p>
+    </div>
+    <div class="foot"><span><b>RIVALY</b> · Cibersegurança e IA</span><span>07 / 10</span></div>
+</section>
+
+<!-- ======================= 8. PADRÃO: O QUÊ ======================= -->
+<section class="slide" id="s8">
+    <p class="kicker">Padrão de senha · o quê</p>
+    <h2>Oito regras</h2>
+    <div class="body">
+        <div class="rules">
+            <div class="card"><span class="num">01</span><h3>15 a 128 caracteres</h3><p>Frase com espaço, acento e emoji vale. Normalizada em NFKC.</p><span class="tag tag--ok">Funciona</span></div>
+            <div class="card"><span class="num">02</span><h3>Sem composição obrigatória</h3><p>"1 maiúscula e 1 símbolo" gera <code>Senha@2026</code>. Aqui ela é recusada.</p><span class="tag tag--ok">Funciona</span></div>
+            <div class="card"><span class="num">03</span><h3>Senhas comuns bloqueadas</h3><p>Com variações: <code>p@ssw0rd</code>, <code>minecraft2024!</code>, times e jogos.</p><span class="tag tag--ok">Funciona</span></div>
+            <div class="card"><span class="num">04</span><h3>Sem dados pessoais</h3><p>Nada do apelido nem do e-mail dentro da senha.</p><span class="tag tag--ok">Funciona</span></div>
+            <div class="card"><span class="num">05</span><h3>Vazadas recusadas</h3><p>Have I Been Pwned com k-anonimato: só 5 caracteres do hash saem.</p><span class="tag tag--ok">Funciona</span></div>
+            <div class="card"><span class="num">06</span><h3>Hash lento com sal</h3><p>argon2id (19 MiB) no servidor; PBKDF2 com 600 mil iterações no navegador.</p><span class="tag tag--ok">Funciona</span></div>
+            <div class="card"><span class="num">07</span><h3>Bloqueio progressivo</h3><p>5º erro: 30 s, dobrando até 15 min. Por e-mail e IP. Mensagem genérica.</p><span class="tag tag--ok">Funciona</span></div>
+            <div class="card"><span class="num">08</span><h3>Recuperação e MFA</h3><p>Link único de 15 min; TOTP opcional; passkeys depois.</p><span class="tag tag--plan">Proposta</span></div>
+        </div>
+        <p class="base"><strong>Base:</strong> NIST SP 800-63B-4 (2025) · OWASP ASVS 5.0, V6 · OWASP Password Storage e Authentication Cheat Sheets · Have I Been Pwned · LGPD, art. 46</p>
+    </div>
+    <div class="foot"><span><b>RIVALY</b> · Padrão de senha</span><span>08 / 10</span></div>
+</section>
+
+<!-- ======================= 9. PADRÃO: COMO ======================= -->
+<section class="slide" id="s9">
+    <p class="kicker">Padrão de senha · como</p>
+    <h2>O cliente ajuda, o servidor decide</h2>
+    <div class="body">
+        <div class="how">
+            <div class="box">
+                <h3>Navegador <span class="tag tag--ok">Funciona</span></h3>
+                <ul>
+                    <li><strong>Medidor de força</strong> e checklist ao vivo no cadastro</li>
+                    <li><strong>HIBP:</strong> SHA-1 local, envia só <code>5BAA6</code></li>
+                    <li><strong>PBKDF2</strong> 600 mil + sal; migra o hash antigo no login</li>
+                    <li><strong>Pausa</strong> com contagem regressiva no 5º erro</li>
+                </ul>
+            </div>
+            <div class="arrow">
+                <svg viewBox="0 0 96 40" fill="none" stroke="currentColor" stroke-width="4"><path d="M4 20h84M72 6l16 14-16 14"/></svg>
+                <span>JSON<br>HTTPS</span>
+            </div>
+            <div class="box">
+                <h3>Servidor <span class="tag tag--ok">Funciona</span></h3>
+                <ul>
+                    <li><strong>Mesma regra</strong> revalidada, mais o HIBP com padding</li>
+                    <li><strong>argon2id</strong> nativo do Node, formato PHC</li>
+                    <li><strong>HTTP 429</strong> + <code>Retry-After</code>, por e-mail e por IP</li>
+                    <li><strong>Cookie</strong> HttpOnly + SameSite=Strict, token guardado como hash</li>
+                </ul>
+            </div>
+        </div>
+        <p class="shared">Um arquivo de regras para os dois lados: <strong>js/core/password-policy.js</strong>. No ar na Vercel: <strong>/api/password-check</strong>.</p>
+        <dl class="stored">
+            <dt>Antes · SHA-256, sal fixo</dt><dd class="old">2f0f2dd715384adc3b7fc60728ea8d3964af70ebc8ee6a8708ac528d28cbcc2e</dd>
+            <dt>Agora · argon2id</dt><dd>$argon2id$v=19$m=19456,t=2,p=1$35meMKYLZjZHbxfkCeuwAQ$JYiHljUrCMn+Y1GGGOPGZSG7KK+06kjMkTwLkOpHTkw</dd>
+        </dl>
+        <div class="how-bottom">
+            <div class="card"><h3>Recuperação <span class="tag tag--plan">Proposta</span></h3><p>Token de 32 bytes guardado como hash, uso único, 15 min. Mesma resposta exista o e-mail ou não. Trocar a senha encerra as sessões.</p></div>
+            <div class="card"><h3>MFA opcional <span class="tag tag--plan">Proposta</span></h3><p>App autenticador (TOTP) com 10 códigos de recuperação. Obrigatório para líder e oficial de clã.</p></div>
+            <div class="card"><h3>Passkeys <span class="tag tag--plan">Proposta</span></h3><p>WebAuthn: a chave fica no aparelho e não pode ser digitada num site falso.</p></div>
+        </div>
+    </div>
+    <div class="foot"><span><b>RIVALY</b> · Padrão de senha</span><span>09 / 10</span></div>
+</section>
+
+<!-- ======================= 10. DEMO ======================= -->
+<section class="slide" id="s10">
+    <p class="kicker">Demonstração e próximos passos</p>
+    <h2>Funcionando, testado e documentado</h2>
+    <div class="body demo">
+        <div>
+            <figure class="shot"><img src="img/lab-medidor.png" alt="Medidor de força recusando password12345678, vazada 24.881 vezes"><figcaption>Ao vivo</figcaption></figure>
+            <p class="shot-note"><strong>password12345678</strong> tem 16 caracteres, mas é variação de senha comum e apareceu <strong>24.881 vezes</strong> em vazamentos. Do navegador saíram só 5 caracteres do hash.</p>
+        </div>
+        <div class="facts">
+            <div class="fact"><b>83</b><span><strong>testes passando</strong>, 44 novos de segurança (<code>npm test</code>)</span></div>
+            <div class="fact"><b>4</b><span>demos ao vivo em <code>/seguranca.html</code> (<code>npm run demo</code>)</span></div>
+            <div class="fact"><b>0</b><span>vulnerabilidades no <code>npm audit</code> (eram 2 altas)</span></div>
+            <ul class="refs">
+                <li><strong>Próximos passos:</strong> backend com banco, MFA, regras de jogo no servidor e a primeira IA (login de risco).</li>
+                <li><strong>Documentos:</strong> <code>docs/seguranca-e-ia.md</code> e <code>docs/padrao-de-senha.md</code></li>
+            </ul>
+        </div>
+        <div class="final">
+            <div class="links__qr" data-qr></div>
+            <dl>
+                <dt>Vídeo</dt><dd data-video></dd>
+                <dt>Código</dt><dd data-repo></dd>
+                <dt>Site</dt><dd data-site></dd>
+            </dl>
+            <p class="thanks">GG.<br>Obrigado!</p>
+        </div>
+    </div>
+    <div class="foot"><span><b>RIVALY</b> · Guilherme Oliveira Santos · RM576218</span><span>10 / 10</span></div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" integrity="sha384-mZT2gIty7ZDdOGkxfP6joZcYdMW1Jvj9dRlfpTmaJAKKXTqzygtB22k7FLe+KZC1" crossorigin="anonymous"></script>
+<script>
+(function () {
+    var root = document.documentElement;
+    var video = root.dataset.videoUrl;
+    var strip = function (url) { return url.replace(/^https?:\/\//, ''); };
+
+    document.querySelectorAll('[data-video]').forEach(function (node) {
+        if (video) { node.textContent = strip(video); }
+        else { node.textContent = 'adicionar o link do YouTube (não listado)'; node.classList.add('missing'); }
+    });
+    document.querySelectorAll('[data-repo]').forEach(function (node) {
+        // quebra de linha só depois de uma barra, nunca no meio do nome
+        strip(root.dataset.repoUrl).split('/').forEach(function (part, index, all) {
+            node.appendChild(document.createTextNode(part + (index < all.length - 1 ? '/' : '')));
+            if (index < all.length - 1) node.appendChild(document.createElement('wbr'));
+        });
+    });
+    document.querySelectorAll('[data-site]').forEach(function (node) { node.textContent = strip(root.dataset.siteUrl); });
+
+    if (video && window.qrcode) {
+        var qr = window.qrcode(0, 'M');
+        qr.addData(video);
+        qr.make();
+        var src = qr.createDataURL(10, 0);
+        document.querySelectorAll('[data-qr]').forEach(function (node) {
+            var img = document.createElement('img');
+            img.src = src;
+            img.alt = 'QR code do vídeo';
+            node.appendChild(img);
+        });
+    }
+
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () {
+        window.__slidesReady = true;
+    });
+})();
+</script>
+</body>
+</html>

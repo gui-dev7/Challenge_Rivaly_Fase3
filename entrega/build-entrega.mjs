@@ -3,6 +3,7 @@
  *
  *   npm run entrega            PDF + ZIP (o ZIP exige o link do vídeo)
  *   npm run entrega -- --previa   também salva um PNG de cada slide
+ *   npm run entrega -- --pasta <dir>   lê foto e link de <dir> e grava o PDF e o ZIP lá
  *
  * Passos:
  *   1. lê o link do YouTube em entrega/link-do-video.txt;
@@ -17,7 +18,7 @@
  */
 
 import { spawn } from 'node:child_process';
-import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -28,6 +29,16 @@ const DIST = join(HERE, 'dist');
 const NAME = 'Challenge_Rivaly_Fase3';
 const PREVIEW = process.argv.includes('--previa');
 
+/**
+ * --pasta <dir>: a pasta de entrega (fora do projeto). A foto e o link são
+ * lidos de lá primeiro, e o PDF e o ZIP também são gravados lá.
+ */
+const pastaIndex = process.argv.indexOf('--pasta');
+const PASTA = pastaIndex > -1 && process.argv[pastaIndex + 1] ? resolve(process.argv[pastaIndex + 1]) : null;
+const SOURCES = [PASTA, HERE].filter(Boolean);
+
+const firstExisting = (names) => SOURCES.flatMap((dir) => names.map((name) => join(dir, name))).find((path) => existsSync(path)) ?? null;
+
 const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
 
 /* ============================================================
@@ -35,10 +46,12 @@ const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
    ============================================================ */
 
 function readVideoLink() {
-    const file = join(HERE, 'link-do-video.txt');
-    if (!existsSync(file)) return null;
-    const line = readFileSync(file, 'utf8').split(/\r?\n/).map((text) => text.trim())
-        .find((text) => text && !text.startsWith('#'));
+    // Vale o primeiro arquivo que tiver um link: a pasta de entrega, depois entrega/.
+    const line = SOURCES.map((dir) => join(dir, 'link-do-video.txt'))
+        .filter((file) => existsSync(file))
+        .map((file) => readFileSync(file, 'utf8').replace(/^﻿/, '').split(/\r?\n/).map((text) => text.trim())
+            .find((text) => text && !text.startsWith('#')))
+        .find(Boolean);
     if (!line) return null;
     try {
         const url = new URL(line);
@@ -206,8 +219,11 @@ if (!browserPath) {
 
 mkdirSync(DIST, { recursive: true });
 const renderFile = join(HERE, '_render.html');
-const source = readFileSync(join(HERE, 'slides.html'), 'utf8');
-writeFileSync(renderFile, source.replace('data-video-url=""', `data-video-url="${escapeAttr(video ?? '')}"`));
+const photo = firstExisting(['foto.jpg', 'foto.jpeg', 'foto.png', 'foto.JPG', 'foto.PNG']);
+let source = readFileSync(join(HERE, 'slides.html'), 'utf8')
+    .replace('data-video-url=""', `data-video-url="${escapeAttr(video ?? '')}"`);
+if (photo) source = source.replace('src="foto.jpg"', `src="${escapeAttr(pathToFileURL(photo).href)}"`);
+writeFileSync(renderFile, source);
 
 const pdfPath = join(DIST, `${NAME}.pdf`);
 const browser = await openBrowser(browserPath);
@@ -251,24 +267,32 @@ try {
 
     console.log(`PDF: ${pdfPath} (${pages} páginas)`);
     if (pages > 10) console.warn('ATENÇÃO: a atividade pede no máximo 10 slides.');
-    if (!stats.photo) console.warn('Falta a foto: salve como entrega/foto.jpg e rode de novo.');
+    if (!stats.photo) console.warn(`Falta a foto: salve como foto.jpg em ${PASTA ?? 'entrega/'} e rode de novo.`);
+    else console.log(`Foto: ${photo}`);
     if (video && !stats.qr) console.warn('O QR code não foi gerado (sem internet?). O link aparece em texto.');
 } finally {
     browser.close();
     rmSync(renderFile, { force: true });
 }
 
+if (PASTA) {
+    copyFileSync(pdfPath, join(PASTA, `${NAME}.pdf`));
+    console.log(`PDF copiado para: ${join(PASTA, `${NAME}.pdf`)}`);
+}
+
 if (!video) {
     console.warn('\nO ZIP NÃO foi gerado: falta o link do vídeo.');
-    console.warn('Publique o vídeo no YouTube como "Não listado", cole o link em entrega/link-do-video.txt e rode "npm run entrega" de novo.');
+    console.warn(`Publique o vídeo no YouTube como "Não listado", cole o link em ${join(PASTA ?? HERE, 'link-do-video.txt')} e gere de novo.`);
     process.exit(0);
 }
 
 const txtName = 'link-do-video.txt';
-const zipPath = join(DIST, `${NAME}.zip`);
-writeFileSync(join(DIST, txtName), `${video}\n`);
-writeFileSync(zipPath, buildZip([
+const zipBytes = buildZip([
     { name: `${NAME}.pdf`, data: readFileSync(pdfPath) },
     { name: txtName, data: Buffer.from(`${video}\n`, 'utf8') },
-]));
+]);
+writeFileSync(join(DIST, txtName), `${video}\n`);
+writeFileSync(join(DIST, `${NAME}.zip`), zipBytes);
+const zipPath = join(PASTA ?? DIST, `${NAME}.zip`);
+writeFileSync(zipPath, zipBytes);
 console.log(`ZIP: ${zipPath}\n  ├─ ${NAME}.pdf\n  └─ ${txtName}  →  ${video}`);

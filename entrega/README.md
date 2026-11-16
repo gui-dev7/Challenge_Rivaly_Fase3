@@ -37,3 +37,7 @@ Tudo o que a atividade pede, gerado a partir desta pasta.
 5. **Conferir:** descompacte o ZIP numa pasta nova e abra os dois arquivos antes de enviar.
 
 Para mudar um texto, edite `slides.html` (dá para abrir direto no navegador) e rode `npm run entrega` de novo.
+
+### Pasta de entrega fora do projeto
+
+`npm run entrega -- --pasta <dir>` lê `foto.jpg` e `link-do-video.txt` primeiro de `<dir>` e grava o PDF e o ZIP lá. É o que o `GERAR-ENTREGA.bat` da pasta `Entrega_Challenge_Rivaly_Fase3` (ao lado do projeto, fora do Git) faz com dois cliques.
